@@ -97,7 +97,7 @@ const Navbar = () => {
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-primary"
+                className="h-5 w-5 text-[#D60C0C]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -112,7 +112,7 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-10 p-2 shadow rounded-box w-52 text-[#D60C0C] hover:text-primary-hover"
+              className="menu menu-sm dropdown-content mt-3 z-10 p-2 shadow rounded-box w-52 text-white"
             >
               {links}
             </ul>
