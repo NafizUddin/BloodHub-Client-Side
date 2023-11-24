@@ -1,5 +1,5 @@
 import Banner from "../../Home Components/Banner/Banner";
-import BloodTable from "../../Home Components/Banner/Blood Table/BloodTable";
+import BloodTable from "../../Home Components/Blood Table/BloodTable";
 
 const Home = () => {
   return (

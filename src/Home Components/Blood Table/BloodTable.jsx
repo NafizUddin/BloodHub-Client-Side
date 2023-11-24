@@ -1,4 +1,4 @@
-import SectionTitle from "../../../Components/Section Title/SectionTitle";
+import SectionTitle from "../../Components/Section Title/SectionTitle";
 
 const BloodTable = () => {
   return (
