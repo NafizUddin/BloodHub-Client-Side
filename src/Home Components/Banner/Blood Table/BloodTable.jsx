@@ -1,6 +1,15 @@
+import SectionTitle from "../../../Components/Section Title/SectionTitle";
+
 const BloodTable = () => {
   return (
     <div className="my-16">
+      <SectionTitle
+        sub={"Donor Eligibility Assessment Criteria"}
+        heading={"Potential Donor Evaluation"}
+        description={
+          "Ensuring the safety and well-being of both donors and recipients is paramount, and as such, our comprehensive evaluation process assesses potential donors for eligibility based on factors such as medical history, lifestyle choices, and overall health to guarantee the highest standards in blood donation."
+        }
+      ></SectionTitle>
       <div className="relative overflow-x-auto">
         <table className="w-full text-left rtl:text-right text-gray-500 border-2 pb-2">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
