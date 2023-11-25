@@ -12,7 +12,7 @@ const Login = () => {
   return (
     <div>
       <Helmet>
-        <title>Company Name | Login</title>
+        <title>BloodHub | Login</title>
       </Helmet>
       {/* Login Form */}
 
