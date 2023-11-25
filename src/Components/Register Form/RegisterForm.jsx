@@ -16,7 +16,7 @@ const RegisterForm = () => {
   const { createUser, updateUserProfile } = useAuth();
   const [showPasswordFirst, setShowPasswordFirst] = useState(false);
   const [showPasswordSecond, setShowPasswordSecond] = useState(false);
-  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [selectedDistrict, setSelectedDistrict] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const axiosSecure = useAxiosSecureInterceptors();
@@ -25,9 +25,10 @@ const RegisterForm = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleSelectChange = (e) => {
-    setSelectedDistrict(e.target.value);
-  };
+  // useEffect(() => {
+  //   const currentValue = getValues("district");
+  //   setSelectedDistrict(currentValue);
+  // }, [getValues]);
 
   console.log(selectedDistrict);
 
@@ -143,7 +144,12 @@ const RegisterForm = () => {
                 render={({ field }) => (
                   <select
                     {...field}
-                    onChange={handleSelectChange}
+                    value={selectedDistrict}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setSelectedDistrict(value);
+                      field.onChange(value);
+                    }}
                     className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition"
                   >
                     <option value="">Select Your District</option>
@@ -252,6 +258,7 @@ const RegisterForm = () => {
           <input
             type="file"
             className="file-input file-input-bordered file-input-error w-full max-w-xs"
+            required
           />
         </div>
 
