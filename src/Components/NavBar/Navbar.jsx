@@ -2,9 +2,21 @@ import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Custom Hooks/useAuth";
 import logo from "../../assets/Logo/RedLogo.png";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  // const [color, setColor] = useState(false);
+
+  // const changeColor = () => {
+  //   if (window.scrollY >= 70) {
+  //     setColor(true);
+  //   } else {
+  //     setColor(false);
+  //   }
+  // };
+
+  // window.addEventListener("scroll", changeColor);
 
   const handleLogOut = () => {
     logOut()
@@ -90,8 +102,13 @@ const Navbar = () => {
   );
 
   return (
-    <div className="pt-2 lg:px-4 lg:py-4 xl:pt-2 xl:px-0">
-      <div className="navbar">
+    <div className="lg:px-4 xl:px-0">
+      <div
+        className="navbar 
+        max-w-7xl mx-auto bg-white"
+      >
+        {/* color ? "navbar fixed z-30 max-w-7xl mx-auto bg-red-300" : "navbar fixed
+        z-30 max-w-7xl mx-auto bg-white"  */}
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">

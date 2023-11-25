@@ -18,6 +18,7 @@ AOS.init();
 const Banner = () => {
   return (
     <div>
+      {/* className="min-h-[calc(100vh-68px)] pt-20" */}
       <Swiper
         slidesPerView={1}
         spaceBetween={30}
