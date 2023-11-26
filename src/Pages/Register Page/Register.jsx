@@ -1,12 +1,8 @@
 import { useEffect } from "react";
-import signUpAnimation from "../../assets/signUpAnimation.json";
-import Lottie from "lottie-react";
-import AuthNavbar from "../../Components/Auth Navbar/AuthNavbar";
 import RegisterForm from "../../Components/Register Form/RegisterForm";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import logo from "../../assets/Logo/RedLogo.png";
-import LoginForm from "../../Components/Login Form/LoginForm";
 
 const Register = () => {
   useEffect(() => {

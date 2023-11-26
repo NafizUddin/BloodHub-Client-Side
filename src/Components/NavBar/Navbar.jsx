@@ -3,6 +3,8 @@ import useAuth from "../../Custom Hooks/useAuth";
 import logo from "../../assets/Logo/RedLogo.png";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import { CgProfile } from "react-icons/cg";
+import { MdOutlineLogout } from "react-icons/md";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -159,10 +161,11 @@ const Navbar = () => {
                   </label>
                   <ul
                     tabIndex={0}
-                    className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content rounded-box w-52 bg-white"
+                    className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content rounded-box w-60 bg-white"
                   >
                     <li>
                       <a className="text-lg font-medium hover:bg-[#D60C0C]  hover:text-white">
+                        <CgProfile className="text-lg mr-1" />{" "}
                         {user.displayName}
                       </a>
                     </li>
@@ -171,7 +174,7 @@ const Navbar = () => {
                         onClick={handleLogOut}
                         className="text-lg font-medium hover:bg-[#D60C0C] hover:text-white"
                       >
-                        Logout
+                        <MdOutlineLogout className="text-lg mr-1" /> Logout
                       </a>
                     </li>
                   </ul>

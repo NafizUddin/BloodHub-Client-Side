@@ -9,6 +9,11 @@ import useAxiosSecureInterceptors from "../../Custom Hooks/useAxiosSecureInterce
 import district from "../../Jsons/districtInfo.json";
 import upazilla from "../../Jsons/upazillaInfo.json";
 import modifiedUpazilla from "../../Jsons/modifiedUpazillaInfo.json";
+import useAxiosPublic from "../../Custom Hooks/useAxiosPublic";
+import toast from "react-hot-toast";
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const RegisterForm = () => {
   const { register, handleSubmit, reset, formState, control } = useForm();
@@ -20,6 +25,7 @@ const RegisterForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const axiosSecure = useAxiosSecureInterceptors();
+  const axiosPublic = useAxiosPublic();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -30,37 +36,58 @@ const RegisterForm = () => {
   //   setSelectedDistrict(currentValue);
   // }, [getValues]);
 
-  console.log(selectedDistrict);
-
   const handleFormSubmit = (data) => {
     console.log(data);
 
-    // createUser(data.userEmail, data.password)
-    //   .then((res) => {
-    //     updateUserProfile(data.userName, data.photo).then(() => {
-    //       const user = {
-    //         email: data.userEmail,
-    //         name: data.userName,
-    //         firebaseId: res.user.uid,
-    //       };
+    const imageFile = { image: data.photo[0] };
 
-    //       //   axiosSecure.post("/users", user).then((res) => {
-    //       //     if (res.data.insertedId) {
-    //       //       reset();
-    //       //       Swal.fire(
-    //       //         "Success!",
-    //       //         "You have logged in successfully!",
-    //       //         "success"
-    //       //       );
-    //       //       navigate(location?.state ? location.state : "/");
-    //       //     }
-    //       //   });
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code.split("auth/")[1];
-    //     Swal.fire("Ooppss!", `${errorCode}`, "error");
-    //   });
+    if (data?.password !== data?.confirm_pass) {
+      return toast.error("Password does not match!");
+    }
+
+    axiosPublic
+      .post(image_hosting_api, imageFile, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.data.success) {
+          createUser(data.userEmail, data.password)
+            .then((response) => {
+              updateUserProfile(data.userName, res.data.data.display_url).then(
+                () => {
+                  const user = {
+                    email: data.userEmail,
+                    name: data.userName,
+                    firebaseId: response.user.uid,
+                    bloodGroup: data.bloodGroupName,
+                    district: data.district,
+                    upazilla: data.upazilla,
+                    status: "active",
+                    role: "donor",
+                  };
+
+                  axiosSecure.post("/users", user).then((res) => {
+                    if (res.data.insertedId) {
+                      reset();
+                      Swal.fire(
+                        "Success!",
+                        "You have logged in successfully!",
+                        "success"
+                      );
+                      navigate(location?.state ? location.state : "/");
+                    }
+                  });
+                }
+              );
+            })
+            .catch((error) => {
+              const errorCode = error.code.split("auth/")[1];
+              Swal.fire("Ooppss!", `${errorCode}`, "error");
+            });
+        }
+      });
   };
   return (
     <div>
@@ -130,7 +157,7 @@ const RegisterForm = () => {
                     <option value="O+">O+</option>
                     <option value="O-">O-</option>
                     <option value="AB+">AB+</option>
-                    <option value="AB-">O-</option>
+                    <option value="AB-">AB-</option>
                   </select>
                 )}
               />
@@ -257,14 +284,20 @@ const RegisterForm = () => {
           </label>
           <input
             type="file"
+            {...register("photo", {
+              required: { value: true, message: "User Photo is required" },
+            })}
             className="file-input file-input-bordered file-input-error w-full max-w-xs"
             required
           />
+          <p className="mt-2 text-sm text-red-600 font-medium">
+            {errors?.photo?.message}
+          </p>
         </div>
 
         <input
           type="submit"
-          value="Login"
+          value="Sign Up"
           className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] focus:bg-red-700 active:bg-red-800 hover:outline font-semibold text-white"
         />
       </form>
