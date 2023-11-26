@@ -7,13 +7,14 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../Custom Hooks/useAuth";
 import useAxiosSecureInterceptors from "../../Custom Hooks/useAxiosSecureInterceptors";
 import { FcGoogle } from "react-icons/fc";
+import { ImSpinner6 } from "react-icons/im";
 
 const LoginForm = () => {
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
   const location = useLocation();
   const navigate = useNavigate();
-  const { logInWithGoogle, logInWithGithub, signInUser } = useAuth();
+  const { logInWithGoogle, logInWithGithub, signInUser, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const axiosSecure = useAxiosSecureInterceptors();
 
@@ -162,11 +163,16 @@ const LoginForm = () => {
           </div>
         </div>
 
-        <input
+        <button
           type="submit"
-          value="Login"
           className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] focus:bg-red-700 active:bg-red-800 hover:outline font-semibold text-white"
-        />
+        >
+          {loading ? (
+            <ImSpinner6 className="animate-spin m-auto text-xl" />
+          ) : (
+            "LogIn"
+          )}
+        </button>
       </form>
       <div className="w-full rounded-lg md:mt-4 sm:max-w-md xl:p-0">
         <h1 className="text-center text-white">

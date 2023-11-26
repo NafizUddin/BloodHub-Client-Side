@@ -11,6 +11,7 @@ import upazilla from "../../Jsons/upazillaInfo.json";
 import modifiedUpazilla from "../../Jsons/modifiedUpazillaInfo.json";
 import useAxiosPublic from "../../Custom Hooks/useAxiosPublic";
 import toast from "react-hot-toast";
+import { ImSpinner6 } from "react-icons/im";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -18,7 +19,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 const RegisterForm = () => {
   const { register, handleSubmit, reset, formState, control } = useForm();
   const { errors } = formState;
-  const { createUser, updateUserProfile } = useAuth();
+  const { createUser, updateUserProfile, loading } = useAuth();
   const [showPasswordFirst, setShowPasswordFirst] = useState(false);
   const [showPasswordSecond, setShowPasswordSecond] = useState(false);
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -296,11 +297,16 @@ const RegisterForm = () => {
           </p>
         </div>
 
-        <input
+        <button
           type="submit"
-          value="Sign Up"
           className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
-        />
+        >
+          {loading ? (
+            <ImSpinner6 className="animate-spin m-auto text-xl" />
+          ) : (
+            "Sign Up"
+          )}
+        </button>
       </form>
     </div>
   );
