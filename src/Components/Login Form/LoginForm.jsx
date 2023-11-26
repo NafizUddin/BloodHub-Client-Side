@@ -30,7 +30,7 @@ const LoginForm = () => {
           name: res.user?.displayName,
         };
 
-        axiosSecure.post("/users", userInfo).then((res) => {
+        axiosSecure.post("/users", userInfo).then(() => {
           Swal.fire("Success!", "You have logged in with Google!", "success");
           navigate(location?.state ? location.state : "/");
         });

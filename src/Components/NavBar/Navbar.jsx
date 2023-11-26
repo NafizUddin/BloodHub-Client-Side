@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlineLogout } from "react-icons/md";
+import { MdSpaceDashboard } from "react-icons/md";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -86,20 +87,6 @@ const Navbar = () => {
           Funding
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/dashboard"
-          className={({ isActive, isPending }) =>
-            isActive
-              ? "bg-[#D60C0C] px-3 py-2 text-white rounded-md"
-              : isPending
-              ? "pending"
-              : ""
-          }
-        >
-          Dashboard
-        </NavLink>
-      </li>
     </>
   );
 
@@ -168,6 +155,14 @@ const Navbar = () => {
                         <CgProfile className="text-lg mr-1" />{" "}
                         {user.displayName}
                       </a>
+                    </li>
+                    <li>
+                      <Link
+                        to="/dashboard"
+                        className="text-lg font-medium hover:bg-[#D60C0C]  hover:text-white"
+                      >
+                        <MdSpaceDashboard className="text-lg mr-1" /> Dashboard
+                      </Link>
                     </li>
                     <li>
                       <a
