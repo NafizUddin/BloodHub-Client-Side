@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../../Custom Hooks/useAuth";
 import logo from "../../assets/Logo/RedLogo.png";
 import { MdSpaceDashboard } from "react-icons/md";
@@ -7,11 +7,23 @@ import { BiSolidDonateBlood } from "react-icons/bi";
 import { TfiWrite } from "react-icons/tfi";
 import { GiLifeBar } from "react-icons/gi";
 import useUserDetails from "../../Custom Hooks/useUserDetails";
+import { CgProfile } from "react-icons/cg";
+import { MdLogout } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const Sidebar = () => {
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
 
   const { loadedUser, isLoading } = useUserDetails();
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        Swal.fire("Success!", "You have logged out successfully!", "success");
+        navigate("/");
+      })
+      .catch((error) => console.log(error.code));
+  };
 
   return (
     <div>
@@ -143,6 +155,31 @@ const Sidebar = () => {
                         Content Management
                       </NavLink>
                     </li>
+                    <div className="divider"></div>
+                    <li>
+                      <NavLink
+                        to="/dashboard/profile"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <CgProfile className="text-xl mr-1" />
+                        Profile
+                      </NavLink>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleLogOut}
+                        className="text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105"
+                      >
+                        <MdLogout className="text-xl mr-1" />
+                        LogOut
+                      </button>
+                    </li>
                   </>
                 ) : loadedUser?.role === "volunteer" ? (
                   <>
@@ -191,6 +228,31 @@ const Sidebar = () => {
                         Content Management
                       </NavLink>
                     </li>
+                    <div className="divider"></div>
+                    <li>
+                      <NavLink
+                        to="/dashboard/profile"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <CgProfile className="text-xl mr-1" />
+                        Profile
+                      </NavLink>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleLogOut}
+                        className="text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105"
+                      >
+                        <MdLogout className="text-xl mr-1" />
+                        LogOut
+                      </button>
+                    </li>
                   </>
                 ) : (
                   <>
@@ -238,6 +300,31 @@ const Sidebar = () => {
                         <BiSolidDonateBlood className="text-xl mr-1" />
                         Create Donation Request
                       </NavLink>
+                    </li>
+                    <div className="divider"></div>
+                    <li>
+                      <NavLink
+                        to="/dashboard/profile"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <CgProfile className="text-xl mr-1" />
+                        Profile
+                      </NavLink>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleLogOut}
+                        className="text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105"
+                      >
+                        <MdLogout className="text-xl mr-1" />
+                        LogOut
+                      </button>
                     </li>
                   </>
                 )}

@@ -27,7 +27,6 @@ const Navbar = () => {
   const handleLogOut = () => {
     logOut()
       .then(() => {
-        localStorage.removeItem("userDetails");
         Swal.fire("Success!", "You have logged out successfully!", "success");
       })
       .catch((error) => console.log(error.code));

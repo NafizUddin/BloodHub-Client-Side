@@ -14,6 +14,7 @@ import AllRequest from "../../Pages/Admin Pages/All Blood Donation Request/AllRe
 import Blogs from "../../Pages/Admin Pages/Content Management/Blogs";
 import VolunteerHome from "../../Pages/Volunteer Pages/Volunteer Home/VolunteerHome";
 import MyDonationRequests from "../../Pages/Donor Pages/Donor Own Blood Request/MyDonationRequests";
+import ProfileCard from "../../Components/Profile Card/ProfileCard";
 
 const MainRoute = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const MainRoute = createBrowserRouter([
       {
         path: "create-donation-request",
         element: <BloodRequest />,
+      },
+      {
+        path: "profile",
+        element: <ProfileCard></ProfileCard>,
       },
     ],
   },
