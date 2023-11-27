@@ -10,11 +10,8 @@ const Sidebar = () => {
   const axiosSecure = useAxiosSecureInterceptors();
   const [loggedInUser, setLoggedInUser] = useState(null);
 
-  useEffect(() => {
-    axiosSecure
-      .get(`/users/${user?.email}`)
-      .then((res) => setLoggedInUser(res.data));
-  }, [axiosSecure, user?.email]);
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  console.log(userDetails);
 
   return (
     <div>
@@ -72,7 +69,7 @@ const Sidebar = () => {
                     {user?.displayName}
                   </h2>
                   <p className="text-sm text-gray-500 text-center mt-1 uppercase">
-                    {loggedInUser?.role}
+                    {userDetails?.role}
                   </p>
                 </div>
               </div>
@@ -81,7 +78,13 @@ const Sidebar = () => {
                 className="flex flex-col justify-between space-y-2"
               >
                 <NavLink
-                  to="/dashboard/donorHome"
+                  to={
+                    userDetails?.role === "admin"
+                      ? "/dashboard/adminHome"
+                      : userDetails?.role === "volunteer"
+                      ? "/dashboard/adminHome"
+                      : "/dashboard/donorHome"
+                  }
                   className={({ isActive }) =>
                     `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-red-800 hover:text-white hover:scale-105 ${
                       isActive
