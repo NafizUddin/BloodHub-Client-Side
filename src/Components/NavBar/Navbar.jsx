@@ -2,13 +2,16 @@ import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Custom Hooks/useAuth";
 import logo from "../../assets/Logo/RedLogo.png";
 import Swal from "sweetalert2";
-import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlineLogout } from "react-icons/md";
 import { MdSpaceDashboard } from "react-icons/md";
+import Loading from "../Loading/Loading";
+import useUserDetails from "../../Custom Hooks/useUserDetails";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  const { loadedUser, isLoading } = useUserDetails();
+  // const [userDetails, setUserDetails] = useState(null);
   // const [color, setColor] = useState(false);
 
   // const changeColor = () => {
@@ -30,8 +33,11 @@ const Navbar = () => {
       .catch((error) => console.log(error.code));
   };
 
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-  console.log(userDetails);
+  // useEffect(() => {
+  //   const storedUserDetails = JSON.parse(localStorage.getItem("userDetails"));
+  //   setUserDetails(storedUserDetails);
+  // }, []);
+  // console.log(loadedUser);
 
   const links = (
     <>
@@ -161,18 +167,33 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <Link
-                        to={
-                          userDetails?.role === "admin"
-                            ? "/dashboard/adminHome"
-                            : userDetails?.role === "volunteer"
-                            ? "/dashboard/volunteerHome"
-                            : "/dashboard/donorHome"
-                        }
-                        className="text-lg font-medium hover:bg-[#D60C0C]  hover:text-white"
-                      >
-                        <MdSpaceDashboard className="text-lg mr-1" /> Dashboard
-                      </Link>
+                      {isLoading ? (
+                        <Loading />
+                      ) : loadedUser?.role === "admin" ? (
+                        <Link
+                          to="/dashboard/adminHome"
+                          className="text-lg font-medium hover:bg-[#D60C0C] hover:text-white"
+                        >
+                          <MdSpaceDashboard className="text-lg mr-1" />{" "}
+                          Dashboard
+                        </Link>
+                      ) : loadedUser?.role === "volunteer" ? (
+                        <Link
+                          to="/dashboard/volunteerHome"
+                          className="text-lg font-medium hover:bg-[#D60C0C] hover:text-white"
+                        >
+                          <MdSpaceDashboard className="text-lg mr-1" />{" "}
+                          Dashboard
+                        </Link>
+                      ) : (
+                        <Link
+                          to="/dashboard/donorHome"
+                          className="text-lg font-medium hover:bg-[#D60C0C] hover:text-white"
+                        >
+                          <MdSpaceDashboard className="text-lg mr-1" />{" "}
+                          Dashboard
+                        </Link>
+                      )}
                     </li>
                     <li>
                       <a

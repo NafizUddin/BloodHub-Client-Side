@@ -16,29 +16,6 @@ const Home = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecureInterceptors();
 
-  const {
-    data: donor,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["donor"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/users/${user?.email}`);
-      const userDetails = {
-        name: res.data.name,
-        email: res.data.email,
-        role: res.data.role,
-      };
-      localStorage.setItem("userDetails", JSON.stringify(userDetails));
-      return res.data;
-    },
-  });
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <div>
       <Banner />

@@ -2,14 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Custom Hooks/useAuth";
 import useAxiosSecureInterceptors from "../../../Custom Hooks/useAxiosSecureInterceptors";
 import Loading from "../../../Components/Loading/Loading";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SectionTitle from "../../../Components/Section Title/SectionTitle";
 import { Controller, useForm } from "react-hook-form";
 import district from "../../../Jsons/districtInfo.json";
 import modifiedUpazilla from "../../../Jsons/modifiedUpazillaInfo.json";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import { ImSpinner6 } from "react-icons/im";
@@ -22,13 +21,24 @@ const BloodRequest = () => {
   const { errors } = formState;
   const [selectedDistrict, setSelectedDistrict] = useState("");
 
+  const convertTo12HourFormat = (time24) => {
+    const [hours, minutes, seconds] = time24.split(":");
+    const parsedHours = parseInt(hours, 10);
+
+    const meridiem = parsedHours >= 12 ? "PM" : "AM";
+    const hours12 = parsedHours % 12 || 12;
+
+    return `${hours12}:${minutes}:${seconds} ${meridiem}`;
+  };
+
   const handleDonationRequest = (data) => {
-    console.log(data);
+    // console.log(data);
 
     const donationDate = data?.donationDate?.toString().slice(4, 15);
 
-    const donationTime = data?.donationDate?.toString().slice(16, 22);
-    console.log(donationTime);
+    const donationTime = data?.donationDate?.toString().slice(16, 25);
+    const convertedTime = convertTo12HourFormat(donationTime);
+    console.log(convertedTime);
   };
 
   //   console.log(user.email);
@@ -229,7 +239,7 @@ const BloodRequest = () => {
                     <DatePicker
                       selected={field.value}
                       onChange={(date) => field.onChange(date)}
-                      dateFormat="dd-MM-yyyy HH:mm aa"
+                      dateFormat="dd-MM-yyyy hh:mm aa"
                       showTimeSelect
                       timeIntervals={30}
                       className="w-full bg-transparent pb-3 border-b border-gray-300 outline-none invalid:border-red-400 transition placeholder-slate-500"

@@ -7,8 +7,13 @@ import Home from "../../Pages/HomePage/Home";
 import DashboardLayout from "../../Layouts/Dashboard Layout/DashboardLayout";
 import DonorHome from "../../Pages/Donor Pages/Donor Home/DonorHome";
 import PrivateRoute from "../Private Route/PrivateRoute";
-import BloodRequest from "../../Pages/Donor Pages/Donor Blood Request/BloodRequest";
+import BloodRequest from "../../Pages/Donor Pages/Create Donation Request/BloodRequest";
 import AdminHome from "../../Pages/Admin Pages/Admin Home/AdminHome";
+import AllUsers from "../../Pages/Admin Pages/All Users/AllUsers";
+import AllRequest from "../../Pages/Admin Pages/All Blood Donation Request/AllRequest";
+import Blogs from "../../Pages/Admin Pages/Content Management/Blogs";
+import VolunteerHome from "../../Pages/Volunteer Pages/Volunteer Home/VolunteerHome";
+import MyDonationRequests from "../../Pages/Donor Pages/Donor Own Blood Request/MyDonationRequests";
 
 const MainRoute = createBrowserRouter([
   {
@@ -38,17 +43,35 @@ const MainRoute = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      {
-        path: "donorHome",
-        element: <DonorHome />,
-      },
+      // Admin & Volunteer routes
       {
         path: "adminHome",
         element: <AdminHome />,
       },
       {
+        path: "all-users",
+        element: <AllUsers />,
+      },
+      {
+        path: "all-blood-donation-request",
+        element: <AllRequest />,
+      },
+      {
+        path: "content-management",
+        element: <Blogs />,
+      },
+      {
         path: "volunteerHome",
-        element: <AdminHome />,
+        element: <VolunteerHome />,
+      },
+      // Donor Routes
+      {
+        path: "donorHome",
+        element: <DonorHome />,
+      },
+      {
+        path: "my-donation-requests",
+        element: <MyDonationRequests />,
       },
       {
         path: "create-donation-request",
