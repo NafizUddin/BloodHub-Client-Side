@@ -1,13 +1,14 @@
 import { Navigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import useAuth from "../Custom Hooks/useAuth";
+import useAuth from "../../Custom Hooks/useAuth";
+import Loading from "../../Components/Loading/Loading";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
   if (loading) {
-    return <h1>Loading....</h1>;
+    return <Loading />;
   }
 
   if (!user) {

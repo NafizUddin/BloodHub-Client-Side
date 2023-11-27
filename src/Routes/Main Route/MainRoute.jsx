@@ -2,12 +2,12 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../../Layouts/Main Layout/MainLayout";
 import Login from "../../Pages/Login Page/Login";
 import Register from "../../Pages/Register Page/Register";
-import DashboardV2 from "../../Components/DashBoard V2/DashboardV2";
-import DashBoard from "../../Components/DashBoard V1/DashBoard";
 import ErrorPage from "../../Pages/Error Page/ErrorPage";
 import Home from "../../Pages/HomePage/Home";
-import Dashboard from "../../Test Components/Dashboard/Dashboard";
-import DashboardDaisy from "../../Test Components/DashBoard Daisy/DashboardDaisy";
+import DashboardLayout from "../../Layouts/Dashboard Layout/DashboardLayout";
+import DonorHome from "../../Pages/Donor Pages/Donor Home/DonorHome";
+import PrivateRoute from "../Private Route/PrivateRoute";
+import BloodRequest from "../../Pages/Donor Pages/Donor Blood Request/BloodRequest";
 
 const MainRoute = createBrowserRouter([
   {
@@ -31,7 +31,21 @@ const MainRoute = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "/dashboard",
+        element: <DonorHome />,
+      },
+      {
+        path: "create-donation-request",
+        element: <BloodRequest />,
+      },
+    ],
   },
 ]);
 

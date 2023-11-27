@@ -6,7 +6,7 @@ const Loading = () => {
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-[350px]">
         <Lottie animationData={loading} loop={true} />
-        <p className="text-4xl font-semibold dark:text-primary text-center -mt-24">
+        <p className="text-4xl font-semibold dark:text-primary text-center -mt-10">
           Loading.....
         </p>
       </div>
