@@ -12,6 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import { ImSpinner6 } from "react-icons/im";
+import Swal from "sweetalert2";
 
 const BloodRequest = () => {
   const { user, loading } = useAuth();
@@ -28,7 +29,7 @@ const BloodRequest = () => {
     const meridiem = parsedHours >= 12 ? "PM" : "AM";
     const hours12 = parsedHours % 12 || 12;
 
-    return `${hours12}:${minutes}:${seconds} ${meridiem}`;
+    return `${hours12}:${minutes}:${seconds}${meridiem}`;
   };
 
   const handleDonationRequest = (data) => {
@@ -38,17 +39,29 @@ const BloodRequest = () => {
 
     const donationTime = data?.donationDate?.toString().slice(16, 25);
     const convertedTime = convertTo12HourFormat(donationTime);
-    console.log(convertedTime);
+    // console.log(convertedTime);
+
+    const donationInfo = {
+      recipientName: data?.recipientName,
+      recipientDistrict: data?.recipientDistrict,
+      donationDate: donationDate,
+      donationTime: convertedTime,
+      status: "pending",
+      donorName: data?.requester_name,
+      donorEmail: data?.requester_email,
+    };
+
+    axiosSecure.post("/donation", donationInfo).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire("Good job!", "You added a new donation request", "success");
+        reset();
+      }
+    });
   };
 
   //   console.log(user.email);
 
-  const {
-    data: donor,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
+  const { data: donor, isLoading } = useQuery({
     queryKey: ["donor"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/${user?.email}`);
@@ -280,7 +293,7 @@ const BloodRequest = () => {
             {loading ? (
               <ImSpinner6 className="animate-spin m-auto text-xl" />
             ) : (
-              "Add Request"
+              "Request Donation"
             )}
           </button>
         </form>

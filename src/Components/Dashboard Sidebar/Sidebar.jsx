@@ -7,7 +7,6 @@ import { BiSolidDonateBlood } from "react-icons/bi";
 import { TfiWrite } from "react-icons/tfi";
 import { GiLifeBar } from "react-icons/gi";
 import useUserDetails from "../../Custom Hooks/useUserDetails";
-import Loading from "../Loading/Loading";
 
 const Sidebar = () => {
   const { user } = useAuth();
@@ -79,7 +78,9 @@ const Sidebar = () => {
                 className="flex flex-col justify-between space-y-2"
               >
                 {isLoading ? (
-                  <Loading></Loading>
+                  <div className="flex justify-center">
+                    <span className="loading loading-spinner text-error"></span>
+                  </div>
                 ) : loadedUser?.role === "admin" ? (
                   <>
                     <li>
