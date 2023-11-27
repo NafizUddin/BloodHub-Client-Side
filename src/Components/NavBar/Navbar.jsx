@@ -24,10 +24,14 @@ const Navbar = () => {
   const handleLogOut = () => {
     logOut()
       .then(() => {
+        localStorage.removeItem("userDetails");
         Swal.fire("Success!", "You have logged out successfully!", "success");
       })
       .catch((error) => console.log(error.code));
   };
+
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  console.log(userDetails);
 
   const links = (
     <>
@@ -158,7 +162,13 @@ const Navbar = () => {
                     </li>
                     <li>
                       <Link
-                        to="/dashboard"
+                        to={
+                          userDetails?.role === "admin"
+                            ? "/dashboard/adminHome"
+                            : userDetails?.role === "volunteer"
+                            ? "/dashboard/volunteerHome"
+                            : "/dashboard/donorHome"
+                        }
                         className="text-lg font-medium hover:bg-[#D60C0C]  hover:text-white"
                       >
                         <MdSpaceDashboard className="text-lg mr-1" /> Dashboard

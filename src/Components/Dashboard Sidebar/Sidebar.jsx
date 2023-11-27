@@ -2,9 +2,20 @@ import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Custom Hooks/useAuth";
 import logo from "../../assets/Logo/RedLogo.png";
 import { MdSpaceDashboard } from "react-icons/md";
+import useAxiosSecureInterceptors from "../../Custom Hooks/useAxiosSecureInterceptors";
+import { useEffect, useState } from "react";
 
 const Sidebar = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  const axiosSecure = useAxiosSecureInterceptors();
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    axiosSecure
+      .get(`/users/${user?.email}`)
+      .then((res) => setLoggedInUser(res.data));
+  }, [axiosSecure, user?.email]);
+
   return (
     <div>
       <div
@@ -60,8 +71,8 @@ const Sidebar = () => {
                   <h2 className="font-medium md:text-xl text-center text-[#D60C0C]">
                     {user?.displayName}
                   </h2>
-                  <p className="text-xs text-gray-500 text-center">
-                    Administrator
+                  <p className="text-sm text-gray-500 text-center mt-1 uppercase">
+                    {loggedInUser?.role}
                   </p>
                 </div>
               </div>
@@ -70,7 +81,7 @@ const Sidebar = () => {
                 className="flex flex-col justify-between space-y-2"
               >
                 <NavLink
-                  to="/dashboard"
+                  to="/dashboard/donorHome"
                   className={({ isActive }) =>
                     `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-red-800 hover:text-white hover:scale-105 ${
                       isActive
@@ -82,6 +93,7 @@ const Sidebar = () => {
                   <MdSpaceDashboard className="text-xl mr-1" />
                   <span className="">Dashboard</span>
                 </NavLink>
+                {user?.role === "admin" && <> </>}
                 <a
                   href=""
                   className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"

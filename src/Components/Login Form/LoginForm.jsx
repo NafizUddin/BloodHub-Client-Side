@@ -165,7 +165,7 @@ const LoginForm = () => {
 
         <button
           type="submit"
-          className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] focus:bg-red-700 active:bg-red-800 hover:outline font-semibold text-white"
+          className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
         >
           {loading ? (
             <ImSpinner6 className="animate-spin m-auto text-xl" />

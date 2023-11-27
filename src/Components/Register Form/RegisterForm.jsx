@@ -7,7 +7,6 @@ import { Controller, useForm } from "react-hook-form";
 import useAuth from "../../Custom Hooks/useAuth";
 import useAxiosSecureInterceptors from "../../Custom Hooks/useAxiosSecureInterceptors";
 import district from "../../Jsons/districtInfo.json";
-import upazilla from "../../Jsons/upazillaInfo.json";
 import modifiedUpazilla from "../../Jsons/modifiedUpazillaInfo.json";
 import useAxiosPublic from "../../Custom Hooks/useAxiosPublic";
 import toast from "react-hot-toast";
@@ -67,6 +66,7 @@ const RegisterForm = () => {
                     upazilla: data.upazilla,
                     status: "active",
                     role: "donor",
+                    user_img: res.data.data.display_url,
                   };
 
                   axiosSecure.post("/users", user).then((res) => {

@@ -8,6 +8,7 @@ import DashboardLayout from "../../Layouts/Dashboard Layout/DashboardLayout";
 import DonorHome from "../../Pages/Donor Pages/Donor Home/DonorHome";
 import PrivateRoute from "../Private Route/PrivateRoute";
 import BloodRequest from "../../Pages/Donor Pages/Donor Blood Request/BloodRequest";
+import AdminHome from "../../Pages/Admin Pages/Admin Home/AdminHome";
 
 const MainRoute = createBrowserRouter([
   {
@@ -38,8 +39,16 @@ const MainRoute = createBrowserRouter([
     ),
     children: [
       {
-        path: "/dashboard",
+        path: "donorHome",
         element: <DonorHome />,
+      },
+      {
+        path: "adminHome",
+        element: <AdminHome />,
+      },
+      {
+        path: "volunteerHome",
+        element: <AdminHome />,
       },
       {
         path: "create-donation-request",

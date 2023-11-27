@@ -12,42 +12,47 @@ import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
+import { ImSpinner6 } from "react-icons/im";
 
 const BloodRequest = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecureInterceptors();
-  const [donor, setDonor] = useState(null);
+  //   const [donor, setDonor] = useState(null);
   const { register, handleSubmit, reset, formState, control } = useForm();
   const { errors } = formState;
   const [selectedDistrict, setSelectedDistrict] = useState("");
 
   const handleDonationRequest = (data) => {
     console.log(data);
+
+    const donationDate = data?.donationDate?.toString().slice(4, 15);
+
+    const donationTime = data?.donationDate?.toString().slice(16, 22);
+    console.log(donationTime);
   };
+
   //   console.log(user.email);
 
-  //   const {
-  //     data: donor,
-  //     isLoading,
-  //     isError,
-  //     error,
-  //   } = useQuery({
-  //     queryKey: ["blood"],
-  //     queryFn: async () => {
-  //       const res = await axiosSecure.get(`/users/${user?.email}`);
-  //       console.log(res.data);
-  //     },
-  //   });
+  const {
+    data: donor,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["donor"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user?.email}`);
+      return res.data;
+    },
+  });
 
-  //   if (isLoading) {
-  //     return <Loading />;
-  //   }
+  if (isLoading) {
+    return <Loading />;
+  }
 
-  //   console.log(donor);
-
-  useEffect(() => {
-    axiosSecure.get(`/users/${user?.email}`).then((res) => setDonor(res.data));
-  }, [axiosSecure, user?.email]);
+  //   useEffect(() => {
+  //     axiosSecure.get(`/users/${user?.email}`).then((res) => setDonor(res.data));
+  //   }, [axiosSecure, user?.email]);
 
   return (
     <div>
@@ -72,12 +77,7 @@ const BloodRequest = () => {
                   type="text"
                   readOnly
                   defaultValue={donor?.name}
-                  {...register("requester_name", {
-                    required: {
-                      value: true,
-                      message: "Requester Name is required",
-                    },
-                  })}
+                  {...register("requester_name")}
                   className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition placeholder-slate-500"
                   placeholder="Enter Your Name"
                 />
@@ -93,12 +93,7 @@ const BloodRequest = () => {
                   type="email"
                   readOnly
                   defaultValue={donor?.email}
-                  {...register("requester_email", {
-                    required: {
-                      value: true,
-                      message: "Requester Email is required",
-                    },
-                  })}
+                  {...register("requester_email")}
                   className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition placeholder-slate-500"
                   placeholder="Enter your email address"
                 />
@@ -234,7 +229,9 @@ const BloodRequest = () => {
                     <DatePicker
                       selected={field.value}
                       onChange={(date) => field.onChange(date)}
-                      dateFormat="dd-MM-yyyy"
+                      dateFormat="dd-MM-yyyy HH:mm aa"
+                      showTimeSelect
+                      timeIntervals={30}
                       className="w-full bg-transparent pb-3 border-b border-gray-300 outline-none invalid:border-red-400 transition placeholder-slate-500"
                       placeholderText="Enter Donation Date"
                     />
@@ -248,25 +245,34 @@ const BloodRequest = () => {
 
             <div className="flex-1">
               <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
-                <Controller
-                  name="donationTime"
-                  control={control}
-                  render={({ field }) => (
-                    <TimePicker
-                      {...field}
-                      onChange={(time) => field.onChange(time)}
-                      format="HH:mm"
-                      className="w-full bg-transparent pb-3 border-b border-gray-300 outline-none invalid:border-red-400 transition placeholder-slate-500"
-                      placeholderText="Enter Donation Time"
-                    />
-                  )}
+                <input
+                  type="text"
+                  {...register("requesterMessage", {
+                    required: {
+                      value: true,
+                      message: "Requester Message is required",
+                    },
+                  })}
+                  className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition placeholder-slate-500"
+                  placeholder="Enter Requester Message"
                 />
                 <p className="mt-2 text-sm text-red-600 font-medium">
-                  {errors?.donationTime?.message}
+                  {errors?.hospitalName?.message}
                 </p>
               </div>
             </div>
           </div>
+
+          <button
+            type="submit"
+            className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+          >
+            {loading ? (
+              <ImSpinner6 className="animate-spin m-auto text-xl" />
+            ) : (
+              "Add Request"
+            )}
+          </button>
         </form>
       </div>
     </div>
