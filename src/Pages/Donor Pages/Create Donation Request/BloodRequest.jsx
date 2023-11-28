@@ -44,9 +44,10 @@ const BloodRequest = () => {
     const donationInfo = {
       recipientName: data?.recipientName,
       recipientDistrict: data?.recipientDistrict,
+      recipientUpazilla: data?.recipientUpazilla,
       donationDate: donationDate,
       donationTime: convertedTime,
-      status: "pending",
+      status: "Pending",
       donorName: data?.requester_name,
       donorEmail: data?.requester_email,
     };

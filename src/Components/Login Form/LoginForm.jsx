@@ -54,8 +54,6 @@ const LoginForm = () => {
   };
 
   const handleSignIn = (data) => {
-    console.log(data);
-
     signInUser(data.userEmail, data.password)
       .then((res) => {
         const loggedInUser = res.user;

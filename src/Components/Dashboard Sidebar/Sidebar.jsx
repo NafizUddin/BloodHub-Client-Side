@@ -74,7 +74,7 @@ const Sidebar = () => {
                 <img
                   src={user?.photoURL}
                   alt="Avatar user"
-                  className="w-10 h-10 md:w-20 md:h-20 rounded-full mx-auto"
+                  className="w-10 h-10 md:w-20 md:h-20 rounded-full mx-auto object-cover object-top"
                 />
                 <div>
                   <h2 className="font-medium md:text-xl text-center text-[#D60C0C]">
