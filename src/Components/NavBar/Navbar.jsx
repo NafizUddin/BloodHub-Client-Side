@@ -70,7 +70,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/blogs"
+          to="/searchDonors"
           className={({ isActive, isPending }) =>
             isActive
               ? "bg-[#D60C0C] px-3 py-2 text-white rounded-md"
@@ -79,7 +79,7 @@ const Navbar = () => {
               : ""
           }
         >
-          Blogs
+          Search Donors
         </NavLink>
       </li>
       <li>
@@ -94,6 +94,20 @@ const Navbar = () => {
           }
         >
           Funding
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/blogs"
+          className={({ isActive, isPending }) =>
+            isActive
+              ? "bg-[#D60C0C] px-3 py-2 text-white rounded-md"
+              : isPending
+              ? "pending"
+              : ""
+          }
+        >
+          Blogs
         </NavLink>
       </li>
     </>
@@ -127,14 +141,14 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-10 p-2 shadow rounded-box w-52 text-white"
+              className="menu menu-sm dropdown-content mt-3 z-10 p-2 shadow rounded-box w-52 text-gray-800 bg-white"
             >
               {links}
             </ul>
           </div>
           <img
             src={logo}
-            className="hidden md:block w-[230px] md:w-[270px] lg:w-[220px] xl:w-[270px]"
+            className="hidden md:block w-[230px] md:w-[270px] lg:w-[180px] xl:w-[270px]"
           ></img>
         </div>
         <div className="navbar-center hidden lg:flex">

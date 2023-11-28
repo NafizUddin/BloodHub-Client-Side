@@ -15,6 +15,9 @@ import Blogs from "../../Pages/Admin Pages/Content Management/Blogs";
 import VolunteerHome from "../../Pages/Volunteer Pages/Volunteer Home/VolunteerHome";
 import MyDonationRequests from "../../Pages/Donor Pages/Donor Own Blood Request/MyDonationRequests";
 import ProfileCard from "../../Components/Profile Card/ProfileCard";
+import PublicBloodRequests from "../../Pages/Public Blood requests/PublicBloodRequests";
+import SingleDonationDetails from "../../Pages/Single Donation Details/SingleDonationDetails";
+import SearchDonors from "../../Pages/Search Donors/SearchDonors";
 
 const MainRoute = createBrowserRouter([
   {
@@ -25,6 +28,27 @@ const MainRoute = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/donationRequests",
+        element: <PublicBloodRequests />,
+      },
+      {
+        path: "/donationDetails/:id",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <SingleDonationDetails></SingleDonationDetails>{" "}
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `http://localhost:3000/api/donation/${params.id}?status=Pending`
+          ),
+      },
+      {
+        path: "/searchDonors",
+        element: <SearchDonors />,
       },
     ],
   },
