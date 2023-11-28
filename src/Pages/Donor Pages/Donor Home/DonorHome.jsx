@@ -5,6 +5,7 @@ import useAuth from "../../../Custom Hooks/useAuth";
 import Loading from "../../../Components/Loading/Loading";
 import donate from "../../../assets/Icons/blood-donation.png";
 import { CiCircleMore } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 const DonorHome = () => {
   const { loadedUser } = useUserDetails();
@@ -40,7 +41,7 @@ const DonorHome = () => {
       </p>
       <div className="my-8">
         {donation?.length > 0 ? (
-          <div className="pb-24">
+          <div className="pb-12">
             <h1 className="text-[#D60C0C] font-medium text-lg lg:text-2xl text-center lg:text-left mb-4">
               Your Recent Donation Requests:
             </h1>
@@ -60,7 +61,7 @@ const DonorHome = () => {
                 </thead>
                 <tbody>
                   {/* row 1 */}
-                  {donation?.map((singleDonation, index) => (
+                  {donation?.slice(0, 3)?.map((singleDonation, index) => (
                     <tr key={index}>
                       <th>{index + 1}</th>
                       <td>{singleDonation?.recipientName}</td>
@@ -103,6 +104,13 @@ const DonorHome = () => {
             </p>
           </div>
         )}
+      </div>
+      <div className="flex justify-center items-center pb-16">
+        <Link to="/dashboard/my-donation-requests">
+          <button className="py-3 px-4 bg-[#D60C0C] text-white rounded-md hover:bg-red-700">
+            View My All Request
+          </button>
+        </Link>
       </div>
     </div>
   );
