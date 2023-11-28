@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Controller, useForm } from "react-hook-form";
 import useAuth from "../../Custom Hooks/useAuth";
@@ -61,7 +61,7 @@ const RegisterForm = () => {
                     email: data.userEmail,
                     name: data.userName,
                     firebaseId: response.user.uid,
-                    bloodGroup: data.bloodGroupName,
+                    bloodGroup: data.bloodGroup,
                     district: data.district,
                     upazilla: data.upazilla,
                     status: "active",
