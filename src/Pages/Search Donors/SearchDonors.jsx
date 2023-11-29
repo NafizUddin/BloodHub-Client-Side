@@ -5,14 +5,25 @@ import modifiedUpazilla from "../../Jsons/modifiedUpazillaInfo.json";
 import { useState } from "react";
 import { ImSpinner6 } from "react-icons/im";
 import searchImg from "../../assets/Icons/SearchDonor.png";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../Custom Hooks/useAxiosPublic";
 
 const SearchDonors = () => {
   const { register, handleSubmit, reset, formState, control } = useForm();
   const { errors } = formState;
   const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [searchDonors, setSearchedDonors] = useState([]);
+
+  const axiosPublic = useAxiosPublic();
 
   const handleSearchDonor = (data) => {
-    console.log(data);
+    console.log(data.bloodGroup);
+
+    axiosPublic
+      .get(
+        `/users/?email=${data?.donorEmail}&blood=${data?.bloodGroup}&district=${data?.district}&upazilla=${data?.upazilla}`
+      )
+      .then((res) => setSearchedDonors(res.data));
   };
   return (
     <div>
@@ -44,14 +55,14 @@ const SearchDonors = () => {
                       className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition"
                     >
                       <option value="">Select Blood Group</option>
-                      <option value="A+">A+</option>
-                      <option value="A-">A-</option>
-                      <option value="B+">B+</option>
-                      <option value="B-">B-</option>
-                      <option value="O+">O+</option>
-                      <option value="O-">O-</option>
-                      <option value="AB+">AB+</option>
-                      <option value="AB-">AB-</option>
+                      <option value="A positive">A+</option>
+                      <option value="A negative">A-</option>
+                      <option value="B positive">B+</option>
+                      <option value="B negative">B-</option>
+                      <option value="O positive">O+</option>
+                      <option value="O negative">O-</option>
+                      <option value="AB positive">AB+</option>
+                      <option value="AB negative">AB-</option>
                     </select>
                   )}
                 />
@@ -152,16 +163,20 @@ const SearchDonors = () => {
           </form>
         </div>
         <div className="col-span-4">
-          <div className="flex justify-center items-center flex-col">
-            <div className="pt-32">
-              <img src={searchImg} className="w-52" />
+          {searchDonors ? (
+            ""
+          ) : (
+            <div className="flex justify-center items-center flex-col">
+              <div className="pt-32">
+                <img src={searchImg} className="w-52" />
+              </div>
+              <p className="max-w-lg text-center text-lg">
+                Get the desired donors who can make a life-changing impact by
+                contributing their invaluable blood donations to those in urgent
+                need.
+              </p>
             </div>
-            <p className="max-w-lg text-center text-lg">
-              Get the desired donors who can make a life-changing impact by
-              contributing their invaluable blood donations to those in urgent
-              need.
-            </p>
-          </div>
+          )}
         </div>
       </div>
     </div>

@@ -17,29 +17,6 @@ const MyDonationRequests = () => {
   // creating an array named pages
   const pages = [...Array(numberOfPages).keys()];
 
-  const {
-    data: allDonation,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["allDonation"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/donation?email=${user?.email}&page=${currentPage}&size=${itemsPerPage}`
-      );
-      return res.data;
-    },
-  });
-
-  const { data } = useQuery({
-    queryKey: ["donate"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/donationCount?email=${user?.email}`);
-      setCount(res.data?.count);
-      return res.data?.count;
-    },
-  });
-
   const handleCurrentPage = (page) => {
     setCurrentPage(page);
     refetch();
@@ -56,6 +33,29 @@ const MyDonationRequests = () => {
       setCurrentPage(currentPage + 1);
     }
   };
+
+  const {
+    data: allDonation,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["allDonation", currentPage, user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/donation?email=${user?.email}&page=${currentPage}&size=${itemsPerPage}`
+      );
+      return res.data;
+    },
+  });
+
+  const { data } = useQuery({
+    queryKey: ["donate"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/donationCount?email=${user?.email}`);
+      setCount(res.data?.count);
+      return res.data?.count;
+    },
+  });
 
   if (isLoading) {
     return <Loading />;
