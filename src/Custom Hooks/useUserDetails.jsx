@@ -6,7 +6,7 @@ const useUserDetails = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecureInterceptors();
   const { data: loadedUser, isLoading } = useQuery({
-    queryKey: ["donor"],
+    queryKey: ["donor", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/${user?.email}`);
       return res.data;
