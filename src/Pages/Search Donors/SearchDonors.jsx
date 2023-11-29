@@ -12,18 +12,24 @@ const SearchDonors = () => {
   const { register, handleSubmit, reset, formState, control } = useForm();
   const { errors } = formState;
   const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [searchDonors, setSearchedDonors] = useState([]);
+  const [searchDonors, setSearchedDonors] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const axiosPublic = useAxiosPublic();
 
   const handleSearchDonor = (data) => {
-    console.log(data.bloodGroup);
+    setLoading(true);
 
     axiosPublic
       .get(
-        `/users/?email=${data?.donorEmail}&blood=${data?.bloodGroup}&district=${data?.district}&upazilla=${data?.upazilla}`
+        `/users/?email=${data?.donorEmail}&blood=${data?.bloodGroup}&district=${data?.district}&upazilla=${data?.upazilla}&role=donor`
       )
-      .then((res) => setSearchedDonors(res.data));
+      .then((res) => {
+        setSearchedDonors(res.data);
+        setLoading(false);
+        setSelectedDistrict("");
+        reset();
+      });
   };
   return (
     <div>
@@ -35,7 +41,7 @@ const SearchDonors = () => {
         }
       ></SectionTitle>
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-6 gap-6 xl:mx-0 mx-6">
-        <div className="col-span-2 bg-slate-50 px-8 pb-8 mb-7">
+        <div className="col-span-2 bg-slate-50 px-8 pb-8 mb-7 mx-auto">
           <h1 className="text-center text-[#D60C0C] text-2xl my-5 mb-8">
             Search Donor Form
           </h1>
@@ -153,18 +159,48 @@ const SearchDonors = () => {
               type="submit"
               className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
             >
-              Search
-              {/* {loading ? (
+              {loading ? (
                 <ImSpinner6 className="animate-spin m-auto text-xl" />
               ) : (
                 "Search"
-              )} */}
+              )}
             </button>
           </form>
         </div>
         <div className="col-span-4">
           {searchDonors ? (
-            ""
+            <div className="mt-5">
+              <h1 className="text-[#D60C0C] text-2xl">
+                Found Donors: {searchDonors?.length}
+              </h1>
+              <div className="overflow-x-auto mt-5">
+                <table className="table">
+                  {/* head */}
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Blood Group</th>
+                      <th>Upazilla</th>
+                      <th>District</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {searchDonors?.map((singleDonor, index) => (
+                      <tr key={singleDonor?._id}>
+                        <th>{index + 1}</th>
+                        <td>{singleDonor?.name}</td>
+                        <td>{singleDonor?.email}</td>
+                        <td>{singleDonor?.bloodGroup}</td>
+                        <td>{singleDonor?.upazilla}</td>
+                        <td>{singleDonor?.district}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           ) : (
             <div className="flex justify-center items-center flex-col">
               <div className="pt-32">

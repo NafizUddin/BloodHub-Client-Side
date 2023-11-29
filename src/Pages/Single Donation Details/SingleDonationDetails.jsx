@@ -12,33 +12,36 @@ const SingleDonationDetails = () => {
       <div className="flex items-center justify-center mt-7">
         <img src={detailsDonation} className="w-52" />
       </div>
-      <div className="max-w-xl mx-auto mt-8 flex flex-col gap-3">
-        <h1 className="text-xl">
-          Requester Name: {singleDonationData?.donorName}
-        </h1>
-        <h1 className="text-xl">
-          Requester Email: {singleDonationData?.donorEmail}
-        </h1>
-        <h1 className="text-xl">
-          Recipient Name: {singleDonationData?.recipientName}
-        </h1>
-        <h1 className="text-xl">
-          Recipient Location: {singleDonationData?.recipientUpazilla},{" "}
-          {singleDonationData?.recipientDistrict}.
-        </h1>
-        <h1 className="text-xl">
-          Hospital Name: {singleDonationData?.hospitalName}
-        </h1>
-        <h1 className="text-xl">
-          Hospital Address: {singleDonationData?.hospitalAddress}
-        </h1>
-        <h1 className="text-xl">
-          Donation Date & Time: {singleDonationData?.donationDate},{" "}
-          {singleDonationData?.donationTime}
-        </h1>
-        <h1 className="text-xl">
-          Requester Message: {singleDonationData?.requesterMessage}
-        </h1>
+      <div className="max-w-xl mx-auto mt-8 pb-16">
+        <div className="flex flex-col gap-3 mx-8 xl:mx-0">
+          <h1 className="text-xl">
+            Requester Name: {singleDonationData?.donorName}
+          </h1>
+          <h1 className="text-xl">
+            Requester Email: {singleDonationData?.donorEmail}
+          </h1>
+          <h1 className="text-xl">
+            Recipient Name: {singleDonationData?.recipientName}
+          </h1>
+          <h1 className="text-xl">
+            Recipient Location: {singleDonationData?.recipientUpazilla},{" "}
+            {singleDonationData?.recipientDistrict}.
+          </h1>
+          <h1 className="text-xl">
+            Hospital Name: {singleDonationData?.hospitalName}
+          </h1>
+          <h1 className="text-xl">
+            Hospital Address: {singleDonationData?.hospitalAddress}
+          </h1>
+          <h1 className="text-xl">
+            Donation Date & Time: {singleDonationData?.donationDate},{" "}
+            {singleDonationData?.donationTime}
+          </h1>
+          <h1 className="text-xl">
+            Requester Message: {singleDonationData?.requesterMessage}
+          </h1>
+          <div></div>
+        </div>
       </div>
     </div>
   );
