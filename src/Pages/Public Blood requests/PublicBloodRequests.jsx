@@ -28,7 +28,7 @@ const PublicBloodRequests = () => {
           "Explore critical blood donation requests, join our community, and help save lives by contributing to those in need. Your generosity can make a significant impact on individuals facing medical emergencies."
         }
       ></SectionTitle>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-5 xl:mx-0 mx-6">
         {donationReq?.map((singleDonation) => (
           <div
             key={singleDonation?._id}

@@ -50,6 +50,9 @@ const BloodRequest = () => {
       status: "Pending",
       donorName: data?.requester_name,
       donorEmail: data?.requester_email,
+      hospitalName: data?.hospitalName,
+      hospitalAddress: data?.hospitalAddress,
+      requesterMessage: data?.requesterMessage,
     };
 
     axiosSecure.post("/donation", donationInfo).then((res) => {
@@ -281,7 +284,7 @@ const BloodRequest = () => {
                   placeholder="Enter Requester Message"
                 />
                 <p className="mt-2 text-sm text-red-600 font-medium">
-                  {errors?.hospitalName?.message}
+                  {errors?.requesterMessage?.message}
                 </p>
               </div>
             </div>
