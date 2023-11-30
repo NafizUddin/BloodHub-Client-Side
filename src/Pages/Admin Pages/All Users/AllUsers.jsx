@@ -6,10 +6,12 @@ import { useState } from "react";
 import useAuth from "../../../Custom Hooks/useAuth";
 import donate from "../../../assets/Icons/blood-donation.png";
 import { FaFilter } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecureInterceptors();
   const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [count, setCount] = useState(0);
   const [selectedStatus, setSelectedStatus] = useState("active");
@@ -47,7 +49,7 @@ const AllUsers = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["totalUsers", currentPage],
+    queryKey: ["totalUsers", currentPage, selectedStatus],
     queryFn: async () => {
       const res = await axiosSecure.get(
         `/user/pagination?page=${currentPage}&size=${itemsPerPage}`
@@ -67,6 +69,42 @@ const AllUsers = () => {
     },
   });
 
+  const handleBlockUser = (singleUser) => {
+    setLoading(true);
+    const { status, _id, ...restInfo } = singleUser;
+
+    const newUserInfo = { ...restInfo, status: "blocked" };
+    console.log(newUserInfo);
+
+    axiosSecure
+      .patch(`/users/singleUser/${singleUser?._id}`, newUserInfo)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          setLoading(false);
+          toast.success("You have blocked the user");
+          refetch();
+        }
+      });
+  };
+
+  const handleUnblockUser = (singleUser) => {
+    setLoading(true);
+    const { status, _id, ...restInfo } = singleUser;
+
+    const newUserInfo = { ...restInfo, status: "active" };
+    console.log(newUserInfo);
+
+    axiosSecure
+      .patch(`/users/singleUser/${singleUser?._id}`, newUserInfo)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          setLoading(false);
+          toast.success("You have unblocked the user");
+          refetch();
+        }
+      });
+  };
+
   const handleSelectChange = (event) => {
     // Update the state with the selected value
     setSelectedStatus(event.target.value);
@@ -84,24 +122,6 @@ const AllUsers = () => {
         All Users
       </h1>
       <div className="w-full flex justify-end items-center">
-        {/* <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn m-1 flex items-center gap-1"
-          >
-            <FaFilter />
-            Filter By
-          </div>
-          <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 text-[#D60C0C]">
-            <li>
-              <a onClick={() => setSelectedStatus("active")}>Active</a>
-            </li>
-            <li>
-              <a>Blocked</a>
-            </li>
-          </ul>
-        </div> */}
         <select value={selectedStatus} onChange={handleSelectChange}>
           <option value="active">Filter By</option>
           <option value="active">Active</option>
@@ -141,11 +161,17 @@ const AllUsers = () => {
                       <td className="uppercase">{singleUser?.status}</td>
                       <td>
                         {singleUser?.status === "blocked" ? (
-                          <button className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white">
+                          <button
+                            onClick={() => handleUnblockUser(singleUser)}
+                            className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+                          >
                             Unblock User
                           </button>
                         ) : (
-                          <button className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white">
+                          <button
+                            onClick={() => handleBlockUser(singleUser)}
+                            className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+                          >
                             Block User
                           </button>
                         )}

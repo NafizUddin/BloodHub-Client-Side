@@ -1,6 +1,5 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect } from "react";
-
 import Swal from "sweetalert2";
 import useAxiosSecureInterceptors from "../../Custom Hooks/useAxiosSecureInterceptors";
 import { useState } from "react";
@@ -12,8 +11,8 @@ const CheckOutForm = () => {
   const [amount, setAmount] = useState(0);
 
   useEffect(() => {
-    axiosSecure.post("/create-payment-intent");
-  }, [axiosSecure]);
+    amount !== 0 && axiosSecure.post("/create-payment-intent", { amount });
+  }, [axiosSecure, amount]);
 
   const handleAmountChange = (event) => {
     const enteredAmount = event.target.value;
@@ -54,34 +53,39 @@ const CheckOutForm = () => {
   return (
     <div>
       <form onSubmit={handleFunding}>
-        <input
-          type="number"
-          placeholder="Enter amount"
-          onChange={handleAmountChange}
-        />
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: "16px",
-                color: "#424770",
-                "::placeholder": {
-                  color: "#aab7c4",
+        <div className="space-y-5">
+          <input
+            type="number"
+            placeholder="Enter Amount"
+            min={0}
+            onChange={handleAmountChange}
+            className="input w-full max-w-xs"
+          />
+
+          <CardElement
+            options={{
+              style: {
+                base: {
+                  fontSize: "16px",
+                  color: "white",
+                  "::placeholder": {
+                    color: "#aab7c4",
+                  },
+                },
+                invalid: {
+                  color: "#9e2146",
                 },
               },
-              invalid: {
-                color: "#9e2146",
-              },
-            },
-          }}
-        />
-        <button
-          className="rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-14 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
-          type="submit"
-          disabled={!stripe}
-        >
-          Pay
-        </button>
+            }}
+          />
+          <button
+            className="rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-14 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+            type="submit"
+            disabled={!stripe}
+          >
+            Pay
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -16,9 +16,13 @@ const Funding = () => {
         }
       ></SectionTitle>
 
-      <Elements stripe={stripePromise}>
-        <CheckOutForm></CheckOutForm>
-      </Elements>
+      <div className="card w-50 max-w-md glass bg-secondary hover:bg-secondary shadow-xl mb-4 mx-auto">
+        <div className="card-body">
+          <Elements stripe={stripePromise}>
+            <CheckOutForm></CheckOutForm>
+          </Elements>
+        </div>
+      </div>
     </div>
   );
 };
