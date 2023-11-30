@@ -18,6 +18,7 @@ import ProfileCard from "../../Components/Profile Card/ProfileCard";
 import PublicBloodRequests from "../../Pages/Public Blood requests/PublicBloodRequests";
 import SingleDonationDetails from "../../Pages/Single Donation Details/SingleDonationDetails";
 import SearchDonors from "../../Pages/Search Donors/SearchDonors";
+import Funding from "../../Pages/Funding/Funding";
 
 const MainRoute = createBrowserRouter([
   {
@@ -49,6 +50,14 @@ const MainRoute = createBrowserRouter([
       {
         path: "/searchDonors",
         element: <SearchDonors />,
+      },
+      {
+        path: "/funding",
+        element: (
+          <PrivateRoute>
+            <Funding />
+          </PrivateRoute>
+        ),
       },
     ],
   },
