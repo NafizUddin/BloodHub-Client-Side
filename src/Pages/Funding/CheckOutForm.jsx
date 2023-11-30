@@ -9,15 +9,22 @@ const CheckOutForm = () => {
   const elements = useElements();
   const axiosSecure = useAxiosSecureInterceptors();
   const [amount, setAmount] = useState(0);
+  const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
-    amount !== 0 && axiosSecure.post("/create-payment-intent", { amount });
+    amount !== 0 &&
+      axiosSecure.post("/create-payment-intent", { amount }).then((res) => {
+        console.log(res.data.clientSecret);
+        setClientSecret(res.data.clientSecret);
+      });
   }, [axiosSecure, amount]);
 
   const handleAmountChange = (event) => {
     const enteredAmount = event.target.value;
     setAmount(enteredAmount);
   };
+
+  console.log(clientSecret, amount);
 
   const handleFunding = async (e) => {
     e.preventDefault();
@@ -79,7 +86,7 @@ const CheckOutForm = () => {
             }}
           />
           <button
-            className="rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-14 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+            className="btn rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-14 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
             type="submit"
             disabled={!stripe}
           >

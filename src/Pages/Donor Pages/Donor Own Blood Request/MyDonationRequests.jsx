@@ -5,6 +5,7 @@ import useAxiosSecureInterceptors from "../../../Custom Hooks/useAxiosSecureInte
 import donate from "../../../assets/Icons/blood-donation.png";
 import { CiCircleMore } from "react-icons/ci";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const MyDonationRequests = () => {
   const { user } = useAuth();
@@ -12,6 +13,7 @@ const MyDonationRequests = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [count, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [singleDonationData, setSingleDonationData] = useState({});
 
   const numberOfPages = Math.ceil(count / itemsPerPage);
   // creating an array named pages
@@ -33,6 +35,14 @@ const MyDonationRequests = () => {
       setCurrentPage(currentPage + 1);
     }
   };
+
+  const handleDeleteReq = (data) => {
+    console.log("Delete");
+  };
+
+  useEffect(() => {
+    console.log(singleDonationData);
+  }, [singleDonationData]);
 
   const {
     data: allDonation,
@@ -97,19 +107,33 @@ const MyDonationRequests = () => {
                       <td>{singleDonation?.donationTime}</td>
                       <td>{singleDonation?.status}</td>
                       <td>
+                        {/* <button onClick={handleDeleteReq}>HEllo</button> */}
                         <div className="dropdown dropdown-left">
-                          <div tabIndex={0} role="button" className="m-1">
+                          <label tabIndex={0} className="m-1">
                             <CiCircleMore className="text-3xl" />
-                          </div>
-                          <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
+                          </label>
+                          <ul
+                            tabIndex={0}
+                            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
+                          >
+                            <Link
+                              to={`/donationDetails/${singleDonation?._id}`}
+                            >
+                              <li>
+                                <span className="text-[#D60C0C]">View</span>
+                              </li>
+                            </Link>
+
                             <li>
-                              <a className="text-[#D60C0C]">View</a>
+                              <span className="text-[#D60C0C]">Edit</span>
                             </li>
                             <li>
-                              <a className="text-[#D60C0C]">Edit</a>
-                            </li>
-                            <li>
-                              <a className="text-[#D60C0C]">Delete</a>
+                              <span
+                                onClick={() => handleDeleteReq(singleDonation)}
+                                className="text-[#D60C0C]"
+                              >
+                                Delete
+                              </span>
                             </li>
                           </ul>
                         </div>

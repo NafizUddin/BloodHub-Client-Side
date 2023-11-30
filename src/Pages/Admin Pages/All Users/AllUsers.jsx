@@ -1,11 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecureInterceptors from "../../../Custom Hooks/useAxiosSecureInterceptors";
 import Loading from "../../../Components/Loading/Loading";
-import { CiCircleMore } from "react-icons/ci";
 import { useState } from "react";
-import useAuth from "../../../Custom Hooks/useAuth";
 import donate from "../../../assets/Icons/blood-donation.png";
-import { FaFilter } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 const AllUsers = () => {
@@ -54,9 +51,7 @@ const AllUsers = () => {
       const res = await axiosSecure.get(
         `/user/pagination?page=${currentPage}&size=${itemsPerPage}`
       );
-      return res.data.filter(
-        (user) => user.role !== "admin" && user?.status === selectedStatus
-      );
+      return res.data.filter((user) => user?.status === selectedStatus);
     },
   });
 
@@ -110,11 +105,17 @@ const AllUsers = () => {
     setSelectedStatus(event.target.value);
   };
 
+  const handleRoleChange = (singleUser, selectedRole) => {
+    // console.log(singleUser, selectedRole);
+
+    const { role, _id, ...restInfo } = singleUser;
+    const newUserInfo = { ...restInfo, role: selectedRole };
+    console.log(newUserInfo);
+  };
+
   if (isLoading) {
     return <Loading />;
   }
-
-  console.log(selectedStatus);
 
   return (
     <div>
@@ -123,9 +124,9 @@ const AllUsers = () => {
       </h1>
       <div className="w-full flex justify-end items-center">
         <select value={selectedStatus} onChange={handleSelectChange}>
-          <option value="active">Filter By</option>
-          <option value="active">Active</option>
-          <option value="blocked">Blocked</option>
+          <option value="">Filter By</option>
+          <option value="active">Active Users</option>
+          <option value="blocked">Blocked Users</option>
         </select>
       </div>
       <div className="my-10">
@@ -141,6 +142,7 @@ const AllUsers = () => {
                     <th>User Email</th>
                     <th>User Name</th>
                     <th>User Status</th>
+                    <th>User Role</th>
                     <th></th>
                     <th></th>
                   </tr>
@@ -159,6 +161,7 @@ const AllUsers = () => {
                       <td>{singleUser?.email}</td>
                       <td>{singleUser?.name}</td>
                       <td className="uppercase">{singleUser?.status}</td>
+                      <td className="uppercase">{singleUser?.role}</td>
                       <td>
                         {singleUser?.status === "blocked" ? (
                           <button
@@ -176,23 +179,55 @@ const AllUsers = () => {
                           </button>
                         )}
                       </td>
-                      <td>
-                        <div className="dropdown dropdown-left">
-                          <div tabIndex={0} role="button" className="m-1">
-                            <CiCircleMore className="text-3xl" />
-                          </div>
-                          <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
-                            <li>
-                              <a className="text-[#D60C0C]">Make Admin</a>
-                            </li>
+
+                      {/* <td>
+                        <div className="w-full flex justify-end items-center">
+                          <select
+                            value={selectRole}
+                            onChange={(e) => handleRoleChange(e, singleUser)}
+                            className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+                          >
+                            <option value="">Update Role</option>
+                            <option value="admin">Make Admin</option>
                             {singleUser?.role !== "volunteer" && (
-                              <li>
-                                <a className="text-[#D60C0C]">Make Volunteer</a>
-                              </li>
+                              <option value="volunteer">Make Volunteer</option>
                             )}
-                          </ul>
+                          </select>
                         </div>
-                      </td>
+                      </td> */}
+                      {singleUser?.role !== "admin" && (
+                        <td>
+                          <div className="dropdown dropdown-left dropdown-end">
+                            <div
+                              tabIndex={0}
+                              role="button"
+                              className="m-1 bg-[#D60C0C] text-center rounded-full h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+                            >
+                              Update Role
+                            </div>
+                            <ul
+                              tabIndex={0}
+                              className="dropdown-content z-[1] menu p-2 shadow bg-red-400 rounded-box w-52 text-white"
+                            >
+                              <li>
+                                <span
+                                  onClick={() =>
+                                    handleRoleChange(singleUser, "admin")
+                                  }
+                                >
+                                  Make Admin
+                                </span>
+                              </li>
+                              {singleUser?.role !==
+                              (
+                                <li>
+                                  <span>Make Volunteer</span>
+                                </li>
+                              )}
+                            </ul>
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

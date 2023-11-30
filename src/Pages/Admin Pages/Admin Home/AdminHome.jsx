@@ -1,8 +1,29 @@
+import { useQuery } from "@tanstack/react-query";
 import useUserDetails from "../../../Custom Hooks/useUserDetails";
 import { MdBloodtype } from "react-icons/md";
+import useAxiosSecureInterceptors from "../../../Custom Hooks/useAxiosSecureInterceptors";
 
 const AdminHome = () => {
   const { loadedUser } = useUserDetails();
+  const axiosSecure = useAxiosSecureInterceptors();
+
+  const { data: allUsersCount } = useQuery({
+    queryKey: ["allUsersCount"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/allUsersCount");
+      return res.data.count;
+    },
+  });
+
+  const { data: allDonationCount } = useQuery({
+    queryKey: ["allUsersCount"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/allDonationCount");
+      return res.data.count;
+    },
+  });
+
+  console.log(allUsersCount);
   return (
     <div>
       <h1 className="text-[#D60C0C] text-xl md:text-2xl lg:text-3xl font-semibold text-center">{`Hi ${loadedUser?.name},`}</h1>
@@ -59,7 +80,9 @@ const AdminHome = () => {
                   </div>
 
                   <div className="mx-5">
-                    <h4 className="text-2xl font-semibold text-gray-700">7</h4>
+                    <h4 className="text-2xl font-semibold text-gray-700">
+                      {allUsersCount}
+                    </h4>
                     <div className="text-gray-500">Total Users</div>
                   </div>
                 </div>
@@ -99,7 +122,7 @@ const AdminHome = () => {
 
                   <div className="mx-5">
                     <h4 className="text-2xl font-semibold text-gray-700">
-                      678
+                      {allDonationCount}
                     </h4>
                     <div className="text-gray-500">Total Donation Request</div>
                   </div>
