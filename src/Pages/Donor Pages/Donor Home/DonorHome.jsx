@@ -34,10 +34,10 @@ const DonorHome = () => {
   return (
     <div className="space-y-3">
       <h1 className="text-[#D60C0C] text-xl md:text-2xl lg:text-3xl font-semibold text-center">{`Hi ${loadedUser?.name},`}</h1>
-      <h1 className="text-[#D60C0C] text-2xl md:text-3xl font-bold text-center">
+      <h1 className="text-[#D60C0C] text-2xl md:text-3xl font-bold text-center mt-2">
         Welcome to BloodHub
       </h1>
-      <p className="xl:max-w-2xl mx-auto text-center">
+      <p className="xl:max-w-2xl mx-auto text-center mt-2">
         Our platform connects donors with those in need, fostering a network of
         generosity that transcends borders. Together, we strive to make a
         significant impact in the world of blood donation, ensuring that every
