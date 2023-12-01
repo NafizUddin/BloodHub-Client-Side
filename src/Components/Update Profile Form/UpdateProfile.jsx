@@ -75,7 +75,7 @@ const UpdateProfile = () => {
                 setLoading(false);
                 toast.success("You have Updated your profile");
                 navigate("/dashboard/profile");
-                refetch();
+                refetch();git 
               }
             });
         }

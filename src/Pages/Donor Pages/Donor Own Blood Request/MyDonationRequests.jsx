@@ -14,10 +14,16 @@ const MyDonationRequests = () => {
   const [count, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [singleDonationData, setSingleDonationData] = useState({});
+  const [selectedStatus, setSelectedStatus] = useState("Pending");
 
   const numberOfPages = Math.ceil(count / itemsPerPage);
   // creating an array named pages
   const pages = [...Array(numberOfPages).keys()];
+
+  const handleSelectChange = (event) => {
+    // Update the state with the selected value
+    setSelectedStatus(event.target.value);
+  };
 
   const handleCurrentPage = (page) => {
     setCurrentPage(page);
@@ -40,21 +46,17 @@ const MyDonationRequests = () => {
     console.log("Delete");
   };
 
-  useEffect(() => {
-    console.log(singleDonationData);
-  }, [singleDonationData]);
-
   const {
     data: allDonation,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["allDonation", currentPage, user?.email],
+    queryKey: ["allDonation", currentPage, user?.email, selectedStatus],
     queryFn: async () => {
       const res = await axiosSecure.get(
         `/donation?email=${user?.email}&page=${currentPage}&size=${itemsPerPage}`
       );
-      return res.data;
+      return res.data.filter((user) => user?.status === selectedStatus);
     },
   });
 
@@ -76,6 +78,15 @@ const MyDonationRequests = () => {
       <h1 className="text-center text-[#D60C0C] text-3xl md:text-4xl lg:text-3xl xl:text-4xl font-bold">
         All Donation Requests
       </h1>
+      <div className="w-full flex justify-end items-center">
+        <select value={selectedStatus} onChange={handleSelectChange}>
+          <option value="">Filter By</option>
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Done">Done</option>
+          <option value="Canceled">Canceled</option>
+        </select>
+      </div>
       <div className="my-10">
         {allDonation?.length > 0 ? (
           <div>
