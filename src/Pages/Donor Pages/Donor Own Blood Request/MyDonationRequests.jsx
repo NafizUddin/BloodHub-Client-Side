@@ -121,8 +121,9 @@ const MyDonationRequests = () => {
                     <th>Donation Date</th>
                     <th>Donation Time</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th>Donor Information</th>
                     <th></th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -138,39 +139,15 @@ const MyDonationRequests = () => {
                       <td>{singleDonation?.donationDate}</td>
                       <td>{singleDonation?.donationTime}</td>
                       <td>{singleDonation?.status}</td>
-                      <td>
-                        {/* <button onClick={handleDeleteReq}>HEllo</button> */}
-                        <div className="dropdown dropdown-left">
-                          <label tabIndex={0} className="m-1">
-                            <CiCircleMore className="text-3xl" />
-                          </label>
-                          <ul
-                            tabIndex={0}
-                            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
-                          >
-                            <Link
-                              to={`/donationDetails/${singleDonation?._id}`}
-                            >
-                              <li>
-                                <span className="text-[#D60C0C]">View</span>
-                              </li>
-                            </Link>
-
-                            <li>
-                              <span className="text-[#D60C0C]">Edit</span>
-                            </li>
-                            <li>
-                              <span
-                                onClick={() => handleDeleteReq(singleDonation)}
-                                className="text-[#D60C0C]"
-                              >
-                                Delete
-                              </span>
-                            </li>
-                          </ul>
-                        </div>
-                      </td>
-                      {singleDonation?.status === "In Progress" && (
+                      {singleDonation?.status === "In Progress" ? (
+                        <td>
+                          {singleDonation?.donorName},{" "}
+                          {singleDonation?.donorEmail}
+                        </td>
+                      ) : (
+                        <td></td>
+                      )}
+                      {singleDonation?.status === "In Progress" ? (
                         <td>
                           <div className="dropdown dropdown-left dropdown-end">
                             <div
@@ -209,7 +186,41 @@ const MyDonationRequests = () => {
                             </ul>
                           </div>
                         </td>
+                      ) : (
+                        <td></td>
                       )}
+                      <td>
+                        {/* <button onClick={handleDeleteReq}>HEllo</button> */}
+                        <div className="dropdown dropdown-left">
+                          <label tabIndex={0} className="m-1">
+                            <CiCircleMore className="text-3xl" />
+                          </label>
+                          <ul
+                            tabIndex={0}
+                            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
+                          >
+                            <Link
+                              to={`/donationDetails/${singleDonation?._id}`}
+                            >
+                              <li>
+                                <span className="text-[#D60C0C]">View</span>
+                              </li>
+                            </Link>
+
+                            <li>
+                              <span className="text-[#D60C0C]">Edit</span>
+                            </li>
+                            <li>
+                              <span
+                                onClick={() => handleDeleteReq(singleDonation)}
+                                className="text-[#D60C0C]"
+                              >
+                                Delete
+                              </span>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
