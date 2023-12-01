@@ -106,7 +106,7 @@ const AllUsers = () => {
 
   const handleRoleChange = (singleUser, selectedRole) => {
     // console.log(singleUser, selectedRole);
-
+    setLoading(true);
     const { role, _id, ...restInfo } = singleUser;
     const newUserInfo = { ...restInfo, role: selectedRole };
     console.log(newUserInfo);
@@ -141,7 +141,7 @@ const AllUsers = () => {
       <div className="my-10">
         {totalUsers?.length > 0 ? (
           <div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto pb-16">
               <table className="table">
                 {/* head */}
                 <thead>

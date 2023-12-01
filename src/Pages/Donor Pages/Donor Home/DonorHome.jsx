@@ -49,7 +49,7 @@ const DonorHome = () => {
             <h1 className="text-[#D60C0C] font-medium text-lg lg:text-2xl text-center lg:text-left mb-4">
               Recent Donation Requests:
             </h1>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto pb-16">
               <table className="table">
                 {/* head */}
                 <thead>

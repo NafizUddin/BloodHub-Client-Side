@@ -6,6 +6,7 @@ import donate from "../../../assets/Icons/blood-donation.png";
 import { CiCircleMore } from "react-icons/ci";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const MyDonationRequests = () => {
   const { user } = useAuth();
@@ -69,6 +70,25 @@ const MyDonationRequests = () => {
     },
   });
 
+  const handleStatusChange = (singleUser, selectedStatus) => {
+    // console.log(singleUser, selectedRole);
+
+    const { status, _id, ...restInfo } = singleUser;
+    const newUserInfo = { ...restInfo, status: selectedStatus };
+    console.log(newUserInfo);
+
+    axiosSecure
+      .patch(`/donation/singleDonation/${singleUser?._id}`, newUserInfo)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          toast.success(
+            `You have changed the Donation Status to ${selectedStatus}`
+          );
+          refetch();
+        }
+      });
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -90,7 +110,7 @@ const MyDonationRequests = () => {
       <div className="my-10">
         {allDonation?.length > 0 ? (
           <div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto pb-16">
               <table className="table">
                 {/* head */}
                 <thead>
@@ -102,6 +122,7 @@ const MyDonationRequests = () => {
                     <th>Donation Time</th>
                     <th>Status</th>
                     <th>Action</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -149,6 +170,46 @@ const MyDonationRequests = () => {
                           </ul>
                         </div>
                       </td>
+                      {singleDonation?.status === "In Progress" && (
+                        <td>
+                          <div className="dropdown dropdown-left dropdown-end">
+                            <div
+                              tabIndex={0}
+                              role="button"
+                              className="m-1 bg-[#D60C0C] text-center rounded-full h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+                            >
+                              Update Status
+                            </div>
+                            <ul
+                              tabIndex={0}
+                              className="dropdown-content z-[1] menu p-2 shadow bg-red-400 rounded-box w-52 text-white"
+                            >
+                              <li>
+                                <span
+                                  onClick={() =>
+                                    handleStatusChange(singleDonation, "Done")
+                                  }
+                                >
+                                  Done
+                                </span>
+                              </li>
+
+                              <li>
+                                <span
+                                  onClick={() =>
+                                    handleStatusChange(
+                                      singleDonation,
+                                      "Canceled"
+                                    )
+                                  }
+                                >
+                                  Cancel
+                                </span>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

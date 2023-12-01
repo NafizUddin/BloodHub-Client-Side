@@ -173,7 +173,7 @@ const SearchDonors = () => {
               <h1 className="text-[#D60C0C] text-2xl">
                 Found Donors: {searchDonors?.length}
               </h1>
-              <div className="overflow-x-auto mt-5">
+              <div className="overflow-x-auto mt-5 pb-16">
                 <table className="table">
                   {/* head */}
                   <thead>
