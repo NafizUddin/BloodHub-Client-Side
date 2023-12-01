@@ -69,7 +69,6 @@ const AllUsers = () => {
     const { status, _id, ...restInfo } = singleUser;
 
     const newUserInfo = { ...restInfo, status: "blocked" };
-    console.log(newUserInfo);
 
     axiosSecure
       .patch(`/users/singleUser/${singleUser?._id}`, newUserInfo)

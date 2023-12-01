@@ -19,6 +19,7 @@ import PublicBloodRequests from "../../Pages/Public Blood requests/PublicBloodRe
 import SingleDonationDetails from "../../Pages/Single Donation Details/SingleDonationDetails";
 import SearchDonors from "../../Pages/Search Donors/SearchDonors";
 import Funding from "../../Pages/Funding/Funding";
+import UpdateProfile from "../../Components/Update Profile Form/UpdateProfile";
 
 const MainRoute = createBrowserRouter([
   {
@@ -114,6 +115,10 @@ const MainRoute = createBrowserRouter([
       {
         path: "profile",
         element: <ProfileCard></ProfileCard>,
+      },
+      {
+        path: "updateProfile",
+        element: <UpdateProfile></UpdateProfile>,
       },
     ],
   },

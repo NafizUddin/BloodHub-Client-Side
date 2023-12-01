@@ -3,6 +3,7 @@ import useUserDetails from "../../Custom Hooks/useUserDetails";
 import { MdEmail } from "react-icons/md";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { MdBloodtype } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const ProfileCard = () => {
   const { loadedUser } = useUserDetails();
@@ -50,9 +51,11 @@ const ProfileCard = () => {
             </p>
 
             <div className="pt-12 pb-8">
-              <button className="bg-[#D60C0C] hover:bg-red-800 text-white font-bold py-2 px-4 rounded-full">
-                Edit Profile
-              </button>
+              <Link to="/dashboard/updateProfile">
+                <button className="bg-[#D60C0C] hover:bg-red-800 text-white font-bold py-2 px-4 rounded-full">
+                  Edit Profile
+                </button>
+              </Link>
             </div>
 
             <div className="mt-6 pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
