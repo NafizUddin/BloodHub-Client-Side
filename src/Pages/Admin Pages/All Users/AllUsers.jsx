@@ -111,6 +111,16 @@ const AllUsers = () => {
     const { role, _id, ...restInfo } = singleUser;
     const newUserInfo = { ...restInfo, role: selectedRole };
     console.log(newUserInfo);
+
+    axiosSecure
+      .patch(`/users/singleUser/${singleUser?._id}`, newUserInfo)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          setLoading(false);
+          toast.success(`You have changed the user role to ${selectedRole}`);
+          refetch();
+        }
+      });
   };
 
   if (isLoading) {
@@ -218,10 +228,15 @@ const AllUsers = () => {
                                   Make Admin
                                 </span>
                               </li>
-                              {singleUser?.role !==
-                              (
+                              {singleUser?.role !== "volunteer" && (
                                 <li>
-                                  <span>Make Volunteer</span>
+                                  <span
+                                    onClick={() =>
+                                      handleRoleChange(singleUser, "volunteer")
+                                    }
+                                  >
+                                    Make Volunteer
+                                  </span>
                                 </li>
                               )}
                             </ul>

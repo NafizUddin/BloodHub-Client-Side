@@ -72,13 +72,13 @@ const Sidebar = () => {
 
               <div id="profile" className="space-y-3">
                 <img
-                  src={user?.photoURL}
+                  src={loadedUser?.user_img}
                   alt="Avatar user"
                   className="w-10 h-10 md:w-20 md:h-20 rounded-full mx-auto object-cover object-top"
                 />
                 <div>
                   <h2 className="font-medium md:text-xl text-center text-[#D60C0C]">
-                    {user?.displayName}
+                    {loadedUser?.name}
                   </h2>
                   <p className="text-sm text-gray-500 text-center mt-1 uppercase">
                     {loadedUser?.role}

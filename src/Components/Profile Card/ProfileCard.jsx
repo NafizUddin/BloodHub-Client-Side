@@ -18,7 +18,7 @@ const ProfileCard = () => {
           <div className="p-4 md:p-12 text-center lg:text-left">
             {/* <!-- Image for mobile view--> */}
             <img
-              src={user?.photoURL}
+              src={loadedUser?.user_img}
               className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
             />
 
@@ -155,7 +155,7 @@ const ProfileCard = () => {
         <div className="w-full lg:w-2/5">
           {/* <!-- Big profile image for side bar (desktop) --> */}
           <img
-            src={user?.photoURL}
+            src={loadedUser?.user_img}
             className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block lg:h-[500px] object-cover"
           />
           {/* <!-- Image from: http://unsplash.com/photos/MP0IUfwrn0A --> */}

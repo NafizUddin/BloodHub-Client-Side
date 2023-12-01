@@ -166,7 +166,7 @@ const Navbar = () => {
                     className="btn btn-ghost btn-circle avatar"
                   >
                     <div className="w-10 rounded-full">
-                      <img src={user.photoURL} />
+                      <img src={loadedUser?.user_img} />
                     </div>
                   </label>
                   <ul
@@ -176,7 +176,7 @@ const Navbar = () => {
                     <li>
                       <a className="text-lg font-medium hover:bg-[#D60C0C]  hover:text-white">
                         <CgProfile className="text-lg mr-1" />{" "}
-                        {user.displayName}
+                        {loadedUser?.name}
                       </a>
                     </li>
                     <li>
