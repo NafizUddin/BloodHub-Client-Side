@@ -6,6 +6,14 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useUserDetails from "../../Custom Hooks/useUserDetails";
 import useAxiosSecureInterceptors from "../../Custom Hooks/useAxiosSecureInterceptors";
+import { MdPeople } from "react-icons/md";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { IoIosMan } from "react-icons/io";
+import { IoLocationOutline } from "react-icons/io5";
+import { FaHospitalAlt } from "react-icons/fa";
+import { FaMagnifyingGlassLocation } from "react-icons/fa6";
+import { IoCalendarOutline } from "react-icons/io5";
+import { RiMessage3Line } from "react-icons/ri";
 
 const SingleDonationDetails = () => {
   const singleDonationData = useLoaderData();
@@ -53,30 +61,38 @@ const SingleDonationDetails = () => {
       </div>
       <div className="max-w-xl mx-auto mt-8 pb-16">
         <div className="flex flex-col gap-3 mx-8 xl:mx-0">
-          <h1 className="text-xl">
-            Requester Name: {singleDonationData?.donorName}
+          <h1 className="text-xl flex gap-2 items-center">
+            <MdPeople className="text-[#D60C0C] mr-2 text-xl" /> Requester Name:{" "}
+            {singleDonationData?.donorName}
           </h1>
-          <h1 className="text-xl">
+          <h1 className="text-xl flex gap-2 items-center">
+            <MdOutlineMailOutline className="text-[#D60C0C] mr-2 text-xl" />{" "}
             Requester Email: {singleDonationData?.donorEmail}
           </h1>
-          <h1 className="text-xl">
-            Recipient Name: {singleDonationData?.recipientName}
+          <h1 className="text-xl flex gap-2 items-center">
+            <IoIosMan className="text-[#D60C0C] mr-2 text-xl" /> Recipient Name:{" "}
+            {singleDonationData?.recipientName}
           </h1>
-          <h1 className="text-xl">
+          <h1 className="text-xl flex gap-2 items-center">
+            <IoLocationOutline className="text-[#D60C0C] mr-2 text-xl" />{" "}
             Recipient Location: {singleDonationData?.recipientUpazilla},{" "}
             {singleDonationData?.recipientDistrict}.
           </h1>
-          <h1 className="text-xl">
-            Hospital Name: {singleDonationData?.hospitalName}
+          <h1 className="text-xl flex gap-2 items-center">
+            <FaHospitalAlt className="text-[#D60C0C] mr-2 text-xl" /> Hospital
+            Name: {singleDonationData?.hospitalName}
           </h1>
-          <h1 className="text-xl">
+          <h1 className="text-xl flex gap-2 items-center">
+            <FaMagnifyingGlassLocation className="text-[#D60C0C] mr-2 text-xl" />{" "}
             Hospital Address: {singleDonationData?.hospitalAddress}
           </h1>
-          <h1 className="text-xl">
+          <h1 className="text-xl flex gap-2 items-center">
+            <IoCalendarOutline className="text-[#D60C0C] mr-2 text-xl" />{" "}
             Donation Date & Time: {singleDonationData?.donationDate},{" "}
             {singleDonationData?.donationTime}
           </h1>
-          <h1 className="text-xl">
+          <h1 className="text-xl flex gap-2 ">
+            <RiMessage3Line className="text-5xl -mt-2 text-[#D60C0C]" />{" "}
             Requester Message: {singleDonationData?.requesterMessage}
           </h1>
           <div className="mt-6">
