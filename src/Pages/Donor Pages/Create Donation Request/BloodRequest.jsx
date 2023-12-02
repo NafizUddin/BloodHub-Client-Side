@@ -35,7 +35,7 @@ const BloodRequest = () => {
   };
 
   const handleDonationRequest = (data) => {
-    console.log(data);
+    // console.log(data);
 
     const donationDate = data?.donationDate?.toString().slice(4, 15);
 

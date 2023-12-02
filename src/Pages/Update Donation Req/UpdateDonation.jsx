@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import bear from "../../assets/Icons/bear.png";
 import { Controller, useForm } from "react-hook-form";
 import useUserDetails from "../../Custom Hooks/useUserDetails";
@@ -8,6 +8,8 @@ import modifiedUpazilla from "../../Jsons/modifiedUpazillaInfo.json";
 import DatePicker from "react-datepicker";
 import { ImSpinner6 } from "react-icons/im";
 import SectionTitle from "../../Components/Section Title/SectionTitle";
+import useAxiosSecureInterceptors from "../../Custom Hooks/useAxiosSecureInterceptors";
+import Swal from "sweetalert2";
 
 const UpdateDonation = () => {
   const singleDonationData = useLoaderData();
@@ -19,9 +21,54 @@ const UpdateDonation = () => {
   );
   const [loading, setLoading] = useState(false);
   const today = new Date();
+  const axiosSecure = useAxiosSecureInterceptors();
+  const navigate = useNavigate();
+
+  const convertTo12HourFormat = (time24) => {
+    const [hours, minutes, seconds] = time24.split(":");
+    const parsedHours = parseInt(hours, 10);
+
+    const meridiem = parsedHours >= 12 ? "PM" : "AM";
+    const hours12 = parsedHours % 12 || 12;
+
+    return `${hours12}:${minutes}:${seconds}${meridiem}`;
+  };
 
   const handleUpdateDonationRequest = (data) => {
     console.log(data);
+    setLoading(true);
+
+    const donationDate = data?.donationDate?.toString().slice(4, 15);
+
+    const donationTime = data?.donationDate?.toString().slice(16, 25);
+    const convertedTime = convertTo12HourFormat(donationTime);
+
+    const updatedDonationInfo = {
+      recipientName: data?.recipientName,
+      recipientDistrict: data?.recipientDistrict,
+      recipientUpazilla: data?.recipientUpazilla,
+      donationDate: donationDate,
+      donationTime: convertedTime,
+      status: singleDonationData?.status,
+      donorName: singleDonationData?.donorName,
+      donorEmail: singleDonationData?.donorEmail,
+      hospitalName: data?.hospitalName,
+      hospitalAddress: data?.hospitalAddress,
+      requesterMessage: data?.requesterMessage,
+    };
+
+    axiosSecure
+      .patch(
+        `/donation/singleDonation/${singleDonationData?._id}`,
+        updatedDonationInfo
+      )
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          setLoading(false);
+          Swal.fire("Good job!", "You updated the donation request", "success");
+          reset();
+        }
+      });
   };
   return (
     <div>
