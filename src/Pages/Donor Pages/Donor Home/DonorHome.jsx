@@ -47,7 +47,7 @@ const DonorHome = () => {
   };
 
   const handleDeleteReq = (data) => {
-    console.log(data);
+    // console.log(data);
 
     Swal.fire({
       title: "Are you sure?",
@@ -225,7 +225,7 @@ const DonorHome = () => {
           <div className="h-[350px] flex flex-col justify-center items-center gap-5">
             <img src={donate} className="w-28 md:w-40" />
             <p className="md:max-w-3xl lg:mx-auto text-center mx-6 md:mx-10 text-2xl md:text-3xl text-[#D60C0C]">
-              Any donation request have not been made yet.
+              Sorry, No Data Found.
             </p>
           </div>
         )}

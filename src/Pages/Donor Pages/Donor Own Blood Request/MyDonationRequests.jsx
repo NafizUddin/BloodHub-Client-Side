@@ -116,7 +116,7 @@ const MyDonationRequests = () => {
   return (
     <div>
       <h1 className="text-center text-[#D60C0C] text-3xl md:text-4xl lg:text-3xl xl:text-4xl font-bold">
-        All Donation Requests
+        My All Donation Requests
       </h1>
       <div className="w-full flex justify-end items-center">
         <select value={selectedStatus} onChange={handleSelectChange}>
@@ -256,12 +256,12 @@ const MyDonationRequests = () => {
           <div className="h-[350px] flex flex-col justify-center items-center gap-5">
             <img src={donate} className="w-28 md:w-40" />
             <p className="md:max-w-3xl lg:mx-auto text-center mx-6 md:mx-10 text-2xl md:text-3xl text-[#D60C0C]">
-              Any donation request have not been made yet.
+              Sorry, No Data Found
             </p>
           </div>
         )}
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center flex-wrap">
         <div className="join pb-10">
           <button onClick={handlePrevPage} className="join-item btn">
             Previous
