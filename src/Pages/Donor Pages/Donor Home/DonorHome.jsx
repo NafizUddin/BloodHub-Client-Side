@@ -6,6 +6,8 @@ import Loading from "../../../Components/Loading/Loading";
 import donate from "../../../assets/Icons/blood-donation.png";
 import { CiCircleMore } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const DonorHome = () => {
   const { loadedUser } = useUserDetails();
@@ -25,8 +27,46 @@ const DonorHome = () => {
     },
   });
 
+  const handleStatusChange = (singleUser, selectedStatus) => {
+    // console.log(singleUser, selectedRole);
+
+    const { status, _id, ...restInfo } = singleUser;
+    const newUserInfo = { ...restInfo, status: selectedStatus };
+    console.log(newUserInfo);
+
+    axiosSecure
+      .patch(`/donation/singleDonation/${singleUser?._id}`, newUserInfo)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          toast.success(
+            `You have changed the Donation Status to ${selectedStatus}`
+          );
+          refetch();
+        }
+      });
+  };
+
   const handleDeleteReq = (data) => {
-    console.log("Delete");
+    console.log(data);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#2e8b57",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/donation/${data?._id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            refetch();
+          }
+        });
+      }
+    });
   };
 
   if (isLoading) {
@@ -148,9 +188,13 @@ const DonorHome = () => {
                               </li>
                             </Link>
 
-                            <li>
-                              <span className="text-[#D60C0C]">Edit</span>
-                            </li>
+                            <Link
+                              to={`/dashboard/updateDonation/${singleDonation?._id}`}
+                            >
+                              <li>
+                                <span className="text-[#D60C0C]">Edit</span>
+                              </li>
+                            </Link>
                             <li>
                               <span
                                 onClick={() => handleDeleteReq(singleDonation)}

@@ -7,6 +7,7 @@ import { CiCircleMore } from "react-icons/ci";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const MyDonationRequests = () => {
   const { user } = useAuth();
@@ -44,7 +45,26 @@ const MyDonationRequests = () => {
   };
 
   const handleDeleteReq = (data) => {
-    console.log("Delete");
+    console.log(data);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#2e8b57",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/donation/${data?._id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            refetch();
+          }
+        });
+      }
+    });
   };
 
   const {
