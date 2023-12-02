@@ -20,6 +20,7 @@ import SingleDonationDetails from "../../Pages/Single Donation Details/SingleDon
 import SearchDonors from "../../Pages/Search Donors/SearchDonors";
 import Funding from "../../Pages/Funding/Funding";
 import UpdateProfile from "../../Components/Update Profile Form/UpdateProfile";
+import UpdateDonation from "../../Pages/Update Donation Req/UpdateDonation";
 
 const MainRoute = createBrowserRouter([
   {
@@ -119,6 +120,14 @@ const MainRoute = createBrowserRouter([
       {
         path: "updateProfile",
         element: <UpdateProfile></UpdateProfile>,
+      },
+      {
+        path: "updateDonation/:id",
+        element: <UpdateDonation></UpdateDonation>,
+        loader: ({ params }) =>
+          fetch(
+            `http://localhost:3000/api/donation/${params.id}?status=Pending`
+          ),
       },
     ],
   },

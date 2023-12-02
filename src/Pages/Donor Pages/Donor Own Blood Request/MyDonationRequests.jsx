@@ -207,9 +207,14 @@ const MyDonationRequests = () => {
                               </li>
                             </Link>
 
-                            <li>
-                              <span className="text-[#D60C0C]">Edit</span>
-                            </li>
+                            <Link
+                              to={`/dashboard/updateDonation/${singleDonation?._id}`}
+                            >
+                              <li>
+                                <span className="text-[#D60C0C]">Edit</span>
+                              </li>
+                            </Link>
+
                             <li>
                               <span
                                 onClick={() => handleDeleteReq(singleDonation)}

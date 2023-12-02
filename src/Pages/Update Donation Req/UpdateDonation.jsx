@@ -1,102 +1,42 @@
-import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../../Custom Hooks/useAuth";
-import useAxiosSecureInterceptors from "../../../Custom Hooks/useAxiosSecureInterceptors";
-import Loading from "../../../Components/Loading/Loading";
-import { useState } from "react";
-import SectionTitle from "../../../Components/Section Title/SectionTitle";
+import { useLoaderData } from "react-router-dom";
+import bear from "../../assets/Icons/bear.png";
 import { Controller, useForm } from "react-hook-form";
-import district from "../../../Jsons/districtInfo.json";
-import modifiedUpazilla from "../../../Jsons/modifiedUpazillaInfo.json";
+import useUserDetails from "../../Custom Hooks/useUserDetails";
+import { useState } from "react";
+import district from "../../Jsons/districtInfo.json";
+import modifiedUpazilla from "../../Jsons/modifiedUpazillaInfo.json";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "react-time-picker/dist/TimePicker.css";
-import "react-clock/dist/Clock.css";
 import { ImSpinner6 } from "react-icons/im";
-import Swal from "sweetalert2";
-import bear from "../../../assets/Icons/bear.png";
+import SectionTitle from "../../Components/Section Title/SectionTitle";
 
-const BloodRequest = () => {
-  const { user, loading } = useAuth();
-  const axiosSecure = useAxiosSecureInterceptors();
-  //   const [donor, setDonor] = useState(null);
+const UpdateDonation = () => {
+  const singleDonationData = useLoaderData();
   const { register, handleSubmit, reset, formState, control } = useForm();
   const { errors } = formState;
-  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const { loadedUser } = useUserDetails();
+  const [selectedDistrict, setSelectedDistrict] = useState(
+    singleDonationData?.recipientDistrict
+  );
+  const [loading, setLoading] = useState(false);
   const today = new Date();
 
-  const convertTo12HourFormat = (time24) => {
-    const [hours, minutes, seconds] = time24.split(":");
-    const parsedHours = parseInt(hours, 10);
-
-    const meridiem = parsedHours >= 12 ? "PM" : "AM";
-    const hours12 = parsedHours % 12 || 12;
-
-    return `${hours12}:${minutes}:${seconds}${meridiem}`;
-  };
-
-  const handleDonationRequest = (data) => {
+  const handleUpdateDonationRequest = (data) => {
     console.log(data);
-
-    const donationDate = data?.donationDate?.toString().slice(4, 15);
-
-    const donationTime = data?.donationDate?.toString().slice(16, 25);
-    const convertedTime = convertTo12HourFormat(donationTime);
-    // console.log(convertedTime);
-
-    const donationInfo = {
-      recipientName: data?.recipientName,
-      recipientDistrict: data?.recipientDistrict,
-      recipientUpazilla: data?.recipientUpazilla,
-      donationDate: donationDate,
-      donationTime: convertedTime,
-      status: "Pending",
-      donorName: data?.requester_name,
-      donorEmail: data?.requester_email,
-      hospitalName: data?.hospitalName,
-      hospitalAddress: data?.hospitalAddress,
-      requesterMessage: data?.requesterMessage,
-    };
-
-    axiosSecure.post("/donation", donationInfo).then((res) => {
-      if (res.data.insertedId) {
-        Swal.fire("Good job!", "You added a new donation request", "success");
-        reset();
-      }
-    });
   };
-
-  //   console.log(user.email);
-
-  const { data: donor, isLoading } = useQuery({
-    queryKey: ["donor"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/users/${user?.email}`);
-      return res.data;
-    },
-  });
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  //   useEffect(() => {
-  //     axiosSecure.get(`/users/${user?.email}`).then((res) => setDonor(res.data));
-  //   }, [axiosSecure, user?.email]);
-
   return (
     <div>
       <SectionTitle
         sub={"Be a Lifesaver Today"}
-        heading={"Blood Donation Request"}
+        heading={"Update Blood Donation Request"}
         description={
           "Join us in the mission to save lives through blood donation. Discover local events, check eligibility, and make a difference. Your generosity can be the lifeline someone desperately needs. Be a part of creating a healthier and more resilient community. Give the precious gift of life — donate blood now."
         }
       ></SectionTitle>
 
-      {donor?.status === "active" ? (
+      {loadedUser?.status === "active" ? (
         <div className="mt-7">
           <form
-            onSubmit={handleSubmit(handleDonationRequest)}
+            onSubmit={handleSubmit(handleUpdateDonationRequest)}
             className="space-y-8"
             noValidate
           >
@@ -106,7 +46,7 @@ const BloodRequest = () => {
                   <input
                     type="text"
                     readOnly
-                    defaultValue={donor?.name}
+                    defaultValue={loadedUser?.name}
                     {...register("requester_name")}
                     className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition placeholder-slate-500"
                     placeholder="Enter Your Name"
@@ -122,7 +62,7 @@ const BloodRequest = () => {
                   <input
                     type="email"
                     readOnly
-                    defaultValue={donor?.email}
+                    defaultValue={loadedUser?.email}
                     {...register("requester_email")}
                     className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition placeholder-slate-500"
                     placeholder="Enter your email address"
@@ -139,6 +79,7 @@ const BloodRequest = () => {
                 <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     type="text"
+                    defaultValue={singleDonationData?.recipientName}
                     {...register("recipientName", {
                       required: {
                         value: true,
@@ -158,6 +99,7 @@ const BloodRequest = () => {
                   <Controller
                     name="recipientDistrict"
                     control={control}
+                    defaultValue={singleDonationData?.recipientDistrict}
                     render={({ field }) => (
                       <select
                         {...field}
@@ -184,6 +126,7 @@ const BloodRequest = () => {
                 <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <Controller
                     name="recipientUpazilla"
+                    defaultValue={singleDonationData?.recipientUpazilla}
                     control={control}
                     render={({ field }) => (
                       <select
@@ -214,6 +157,7 @@ const BloodRequest = () => {
                 <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     type="text"
+                    defaultValue={singleDonationData?.hospitalName}
                     {...register("hospitalName", {
                       required: {
                         value: true,
@@ -233,6 +177,7 @@ const BloodRequest = () => {
                 <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     type="text"
+                    defaultValue={singleDonationData?.hospitalAddress}
                     {...register("hospitalAddress", {
                       required: {
                         value: true,
@@ -278,6 +223,7 @@ const BloodRequest = () => {
                 <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     type="text"
+                    defaultValue={singleDonationData?.requesterMessage}
                     {...register("requesterMessage", {
                       required: {
                         value: true,
@@ -301,7 +247,7 @@ const BloodRequest = () => {
               {loading ? (
                 <ImSpinner6 className="animate-spin m-auto text-xl" />
               ) : (
-                "Request Donation"
+                "Update Donation Request"
               )}
             </button>
           </form>
@@ -311,7 +257,7 @@ const BloodRequest = () => {
           <div className="h-[350px] flex flex-col justify-center items-center gap-5">
             <img src={bear} className="w-28 md:w-40" />
             <p className="md:max-w-3xl lg:mx-auto text-center mx-6 md:mx-10 text-2xl md:text-3xl text-[#D60C0C]">
-              You have been restricted from creating request.
+              You have been restricted from Updating request.
             </p>
           </div>
         </div>
@@ -320,4 +266,4 @@ const BloodRequest = () => {
   );
 };
 
-export default BloodRequest;
+export default UpdateDonation;
