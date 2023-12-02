@@ -289,7 +289,7 @@ const RegisterForm = () => {
             {...register("photo", {
               required: { value: true, message: "User Photo is required" },
             })}
-            className="file-input file-input-bordered file-input-error w-full max-w-xs"
+            className="file-input file-input-bordered file-input-error w-full max-w-sm"
             required
           />
           <p className="mt-2 text-sm text-red-600 font-medium">

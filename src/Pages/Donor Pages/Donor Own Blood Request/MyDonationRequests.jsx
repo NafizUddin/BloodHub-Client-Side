@@ -82,7 +82,7 @@ const MyDonationRequests = () => {
   });
 
   const { data } = useQuery({
-    queryKey: ["donate"],
+    queryKey: ["donate", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/donationCount?email=${user?.email}`);
       setCount(res.data?.count);

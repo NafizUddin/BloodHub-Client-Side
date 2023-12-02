@@ -21,6 +21,7 @@ import SearchDonors from "../../Pages/Search Donors/SearchDonors";
 import Funding from "../../Pages/Funding/Funding";
 import UpdateProfile from "../../Components/Update Profile Form/UpdateProfile";
 import UpdateDonation from "../../Pages/Update Donation Req/UpdateDonation";
+import AddBlogs from "../../Pages/Admin Pages/Add Blogs Page/AddBlogs";
 
 const MainRoute = createBrowserRouter([
   {
@@ -120,6 +121,10 @@ const MainRoute = createBrowserRouter([
       {
         path: "updateProfile",
         element: <UpdateProfile></UpdateProfile>,
+      },
+      {
+        path: "addBlogs",
+        element: <AddBlogs></AddBlogs>,
       },
       {
         path: "updateDonation/:id",
