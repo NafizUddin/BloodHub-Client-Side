@@ -4,20 +4,25 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecureInterceptors from "../../../Custom Hooks/useAxiosSecureInterceptors";
 import Loading from "../../../Components/Loading/Loading";
+import { ImSpinner6 } from "react-icons/im";
+import toast from "react-hot-toast";
 
 const Blogs = () => {
   const [selectedStatus, setSelectedStatus] = useState("draft");
   const axiosSecure = useAxiosSecureInterceptors();
+  const [loading, setLoading] = useState(false);
 
   const {
     data: allBlogs,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["allBlogs"],
+    queryKey: ["allBlogs", selectedStatus],
     queryFn: async () => {
       const res = await axiosSecure.get("/blogs");
-      return res.data;
+      return res.data.filter(
+        (singleBlog) => singleBlog?.blogStatus === selectedStatus
+      );
     },
   });
 
@@ -26,11 +31,28 @@ const Blogs = () => {
     setSelectedStatus(event.target.value);
   };
 
+  const handleStatusChange = (blog, status) => {
+    setLoading(true);
+
+    const { blogStatus, _id, ...restInfo } = blog;
+    const newBlogInfo = { ...restInfo, blogStatus: status };
+    console.log(newBlogInfo);
+
+    axiosSecure
+      .patch(`/blogs/singleBlog/${blog?._id}`, newBlogInfo)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          setLoading(false);
+          toast.success("You have Updated the Blog Status");
+          refetch();
+        }
+      });
+  };
+
   if (isLoading) {
     return <Loading></Loading>;
   }
 
-  console.log(allBlogs);
   return (
     <div>
       <SectionTitle
@@ -73,8 +95,34 @@ const Blogs = () => {
                 {blog?.blogTitle}
               </h2>
               <p className="text-gray-700 leading-tight mb-4">
-                {blog?.blogText}
+                {blog?.blogText?.slice(0, 350)}........
               </p>
+              <div className="mt-3">
+                {blog?.blogStatus === "draft" ? (
+                  <button
+                    onClick={() => handleStatusChange(blog, "published")}
+                    className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+                  >
+                    {loading ? (
+                      <ImSpinner6 className="animate-spin m-auto text-xl" />
+                    ) : (
+                      "Publish Blog"
+                    )}
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleStatusChange(blog, "draft")}
+                    className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+                  >
+                    Unpublish Blog
+                  </button>
+                )}
+              </div>
+              <div className="mt-3">
+                <button className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white">
+                  Delete Blog
+                </button>
+              </div>
             </div>
           </div>
         ))}
