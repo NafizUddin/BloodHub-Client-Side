@@ -118,7 +118,7 @@ const MyDonationRequests = () => {
       <h1 className="text-center text-[#D60C0C] text-3xl md:text-4xl lg:text-3xl xl:text-4xl font-bold">
         My All Donation Requests
       </h1>
-      <div className="w-full flex justify-end items-center">
+      <div className="w-full flex justify-end items-center mt-6">
         <select value={selectedStatus} onChange={handleSelectChange}>
           <option value="">Filter By</option>
           <option value="Pending">Pending</option>
@@ -127,7 +127,7 @@ const MyDonationRequests = () => {
           <option value="Canceled">Canceled</option>
         </select>
       </div>
-      <div className="my-10">
+      <div className="my-8">
         {allDonation?.length > 0 ? (
           <div>
             <div className="overflow-x-auto pb-16">

@@ -16,14 +16,13 @@ const AdminHome = () => {
   });
 
   const { data: allDonationCount } = useQuery({
-    queryKey: ["allUsersCount"],
+    queryKey: ["allDonationCount"],
     queryFn: async () => {
       const res = await axiosSecure.get("/allDonationCount");
       return res.data.count;
     },
   });
 
-  console.log(allUsersCount);
   return (
     <div>
       <h1 className="text-[#D60C0C] text-xl md:text-2xl lg:text-3xl font-semibold text-center">{`Hi ${loadedUser?.name},`}</h1>

@@ -155,7 +155,7 @@ const ProfileCard = () => {
         </div>
 
         {/* <!--Img Col--> */}
-        <div className="w-full lg:w-2/5">
+        <div className="w-full lg:w-2/5 py-10">
           {/* <!-- Big profile image for side bar (desktop) --> */}
           <img
             src={loadedUser?.user_img}

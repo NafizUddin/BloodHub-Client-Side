@@ -53,8 +53,6 @@ const Blogs = () => {
   };
 
   const handleDeleteBlog = (data) => {
-    console.log(data);
-
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -105,11 +103,11 @@ const Blogs = () => {
         </select>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 justify-center items-center gap-5 mt-8 mb-12">
+      <div className="grid grid-cols-1 xl:grid-cols-2 justify-center items-center gap-5 mt-8 mb-12">
         {allBlogs?.map((blog) => (
           <div
             key={blog?._id}
-            className="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full"
+            className="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full mx-auto"
           >
             <img
               src={blog?.blogThumb}

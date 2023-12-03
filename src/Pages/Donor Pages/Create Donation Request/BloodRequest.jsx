@@ -84,7 +84,7 @@ const BloodRequest = () => {
   //   }, [axiosSecure, user?.email]);
 
   return (
-    <div>
+    <div className="pb-10">
       <SectionTitle
         sub={"Be a Lifesaver Today"}
         heading={"Blood Donation Request"}

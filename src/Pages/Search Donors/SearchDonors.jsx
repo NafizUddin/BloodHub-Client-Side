@@ -41,109 +41,107 @@ const SearchDonors = () => {
         }
       ></SectionTitle>
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-6 gap-6 xl:mx-0 mx-6">
-        <div className="lg:col-span-2 bg-slate-50 px-8 pb-8 mb-7 mx-auto w-full">
-          <div className="flex justify-center items-center flex-col">
-            <h1 className="text-center text-[#D60C0C] text-2xl my-5 mb-8">
-              Search Donor Form
-            </h1>
-            <form
-              onSubmit={handleSubmit(handleSearchDonor)}
-              noValidate
-              className="pb-5"
+        <div className="lg:col-span-2 bg-slate-50 pb-8 mb-7 px-5 rounded-md">
+          <h1 className="text-center text-[#D60C0C] text-2xl my-5 mb-8">
+            Search Donor Form
+          </h1>
+          <form
+            onSubmit={handleSubmit(handleSearchDonor)}
+            noValidate
+            className="pb-5"
+          >
+            <div className="mb-5">
+              <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
+                <Controller
+                  name="bloodGroup"
+                  control={control}
+                  render={({ field }) => (
+                    <select
+                      {...field}
+                      className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition"
+                    >
+                      <option value="">Select Blood Group</option>
+                      <option value="A positive">A+</option>
+                      <option value="A negative">A-</option>
+                      <option value="B positive">B+</option>
+                      <option value="B negative">B-</option>
+                      <option value="O positive">O+</option>
+                      <option value="O negative">O-</option>
+                      <option value="AB positive">AB+</option>
+                      <option value="AB negative">AB-</option>
+                    </select>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="py-5">
+              <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
+                <Controller
+                  name="district"
+                  control={control}
+                  render={({ field }) => (
+                    <select
+                      {...field}
+                      value={selectedDistrict}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setSelectedDistrict(value);
+                        field.onChange(value);
+                      }}
+                      className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition"
+                    >
+                      <option value="">Select Donor District</option>
+                      {district?.map((singleDistrict, index) => (
+                        <option key={index} value={singleDistrict?.name}>
+                          {singleDistrict?.name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="py-5">
+              <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
+                <Controller
+                  name="upazilla"
+                  control={control}
+                  render={({ field }) => (
+                    <select
+                      {...field}
+                      className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition"
+                    >
+                      <option value="">Select Donor Upazilla</option>
+                      {modifiedUpazilla?.map((singleUpazilla, index) => {
+                        if (
+                          selectedDistrict === singleUpazilla?.district_name
+                        ) {
+                          return (
+                            <option key={index} value={singleUpazilla?.name}>
+                              {singleUpazilla?.name}
+                            </option>
+                          );
+                        }
+                      })}
+                    </select>
+                  )}
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
             >
-              <div className="mb-5">
-                <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
-                  <Controller
-                    name="bloodGroup"
-                    control={control}
-                    render={({ field }) => (
-                      <select
-                        {...field}
-                        className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition"
-                      >
-                        <option value="">Select Blood Group</option>
-                        <option value="A positive">A+</option>
-                        <option value="A negative">A-</option>
-                        <option value="B positive">B+</option>
-                        <option value="B negative">B-</option>
-                        <option value="O positive">O+</option>
-                        <option value="O negative">O-</option>
-                        <option value="AB positive">AB+</option>
-                        <option value="AB negative">AB-</option>
-                      </select>
-                    )}
-                  />
-                </div>
-              </div>
-
-              <div className="py-5">
-                <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
-                  <Controller
-                    name="district"
-                    control={control}
-                    render={({ field }) => (
-                      <select
-                        {...field}
-                        value={selectedDistrict}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          setSelectedDistrict(value);
-                          field.onChange(value);
-                        }}
-                        className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition"
-                      >
-                        <option value="">Select Donor District</option>
-                        {district?.map((singleDistrict, index) => (
-                          <option key={index} value={singleDistrict?.name}>
-                            {singleDistrict?.name}
-                          </option>
-                        ))}
-                      </select>
-                    )}
-                  />
-                </div>
-              </div>
-
-              <div className="py-5">
-                <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
-                  <Controller
-                    name="upazilla"
-                    control={control}
-                    render={({ field }) => (
-                      <select
-                        {...field}
-                        className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition"
-                      >
-                        <option value="">Select Donor Upazilla</option>
-                        {modifiedUpazilla?.map((singleUpazilla, index) => {
-                          if (
-                            selectedDistrict === singleUpazilla?.district_name
-                          ) {
-                            return (
-                              <option key={index} value={singleUpazilla?.name}>
-                                {singleUpazilla?.name}
-                              </option>
-                            );
-                          }
-                        })}
-                      </select>
-                    )}
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
-              >
-                {loading ? (
-                  <ImSpinner6 className="animate-spin m-auto text-xl" />
-                ) : (
-                  "Search"
-                )}
-              </button>
-            </form>
-          </div>
+              {loading ? (
+                <ImSpinner6 className="animate-spin m-auto text-xl" />
+              ) : (
+                "Search"
+              )}
+            </button>
+          </form>
         </div>
         <div className="lg:col-span-4">
           {searchDonors ? (

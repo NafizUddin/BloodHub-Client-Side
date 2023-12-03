@@ -29,7 +29,7 @@ const Sidebar = () => {
     <div>
       <div
         id="view"
-        className="h-full flex flex-row drawer lg:drawer-open"
+        className="h-full flex flex-row drawer lg:drawer-open z-50"
         // eslint-disable-next-line react/no-unknown-property
         x-data="{ sidenav: true }"
       >

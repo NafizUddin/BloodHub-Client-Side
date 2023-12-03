@@ -7,7 +7,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_Pk);
 
 const Funding = () => {
   return (
-    <div>
+    <div className="mt-5">
       <SectionTitle
         sub={"Empowering Lifesaving Initiatives Together"}
         heading={"Funding for Blood Donation Initiatives"}
@@ -16,7 +16,7 @@ const Funding = () => {
         }
       ></SectionTitle>
 
-      <div className="card w-50 max-w-md glass bg-secondary hover:bg-secondary shadow-xl mb-4 mx-auto">
+      <div className="card w-50 max-w-md glass bg-secondary hover:bg-secondary shadow-xl mb-4 md:mx-auto mx-6">
         <div className="card-body">
           <Elements stripe={stripePromise}>
             <CheckOutForm></CheckOutForm>
