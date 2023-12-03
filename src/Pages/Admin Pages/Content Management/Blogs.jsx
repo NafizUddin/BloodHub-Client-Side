@@ -79,7 +79,7 @@ const Blogs = () => {
         </select>
       </div>
 
-      <div className="flex flex-col xl:flex-row justify-center items-center gap-5 mt-8 mb-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 justify-center items-center gap-5 mt-8 mb-12">
         {allBlogs?.map((blog) => (
           <div
             key={blog?._id}

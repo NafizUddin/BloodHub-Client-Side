@@ -98,7 +98,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/blogs"
+          to="/publicBlogs"
           className={({ isActive, isPending }) =>
             isActive
               ? "bg-[#D60C0C] px-3 py-2 text-white rounded-md"

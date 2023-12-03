@@ -22,6 +22,7 @@ import Funding from "../../Pages/Funding/Funding";
 import UpdateProfile from "../../Components/Update Profile Form/UpdateProfile";
 import UpdateDonation from "../../Pages/Update Donation Req/UpdateDonation";
 import AddBlogs from "../../Pages/Admin Pages/Add Blogs Page/AddBlogs";
+import PublicBlog from "../../Pages/Public Blogs/PublicBlog";
 
 const MainRoute = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ const MainRoute = createBrowserRouter([
       {
         path: "/searchDonors",
         element: <SearchDonors />,
+      },
+      {
+        path: "/publicBlogs",
+        element: <PublicBlog></PublicBlog>,
       },
       {
         path: "/funding",
