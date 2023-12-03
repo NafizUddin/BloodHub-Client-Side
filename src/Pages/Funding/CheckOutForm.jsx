@@ -7,6 +7,7 @@ import useUserDetails from "../../Custom Hooks/useUserDetails";
 import moment from "moment/moment";
 import { ImSpinner6 } from "react-icons/im";
 import { useRef } from "react";
+import PropTypes from "prop-types";
 
 const CheckOutForm = ({ refetch }) => {
   const stripe = useStripe();
@@ -146,6 +147,10 @@ const CheckOutForm = ({ refetch }) => {
       </form>
     </div>
   );
+};
+
+CheckOutForm.propTypes = {
+  refetch: PropTypes.func,
 };
 
 export default CheckOutForm;

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 const PublicBlogCard = ({ blog }) => {
   // console.log(Object.keys(blog).join(", "));
   // _id, blogTitle, blogThumb, blogText, blogStatus
-  const { blogTitle, blogThumb, blogText, blogStatus } = blog;
+  const { blogTitle, blogThumb, blogText } = blog;
   return (
     <div>
       <div className="mx-auto">
@@ -28,7 +28,7 @@ const PublicBlogCard = ({ blog }) => {
 };
 
 PublicBlogCard.propTypes = {
-  blog: PropTypes.node.isRequired,
+  blog: PropTypes.object.isRequired,
 };
 
 export default PublicBlogCard;

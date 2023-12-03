@@ -23,6 +23,16 @@ const AdminHome = () => {
     },
   });
 
+  const { data: allFundingCount } = useQuery({
+    queryKey: ["allFundingCount"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/funding");
+      return res.data[0]?.total;
+    },
+  });
+
+  console.log(allFundingCount);
+
   return (
     <div>
       <h1 className="text-[#D60C0C] text-xl md:text-2xl lg:text-3xl font-semibold text-center">{`Hi ${loadedUser?.name},`}</h1>
@@ -106,7 +116,7 @@ const AdminHome = () => {
 
                   <div className="mx-5">
                     <h4 className="text-2xl font-semibold text-gray-700">
-                      $3453
+                      ${allFundingCount}
                     </h4>
                     <div className="text-gray-500">Total Funding</div>
                   </div>

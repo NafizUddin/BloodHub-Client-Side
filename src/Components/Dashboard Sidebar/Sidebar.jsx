@@ -10,9 +10,14 @@ import useUserDetails from "../../Custom Hooks/useUserDetails";
 import { CgProfile } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
 import Swal from "sweetalert2";
+import { IoHomeSharp } from "react-icons/io5";
+import { BiDonateBlood } from "react-icons/bi";
+import { FaSearch } from "react-icons/fa";
+import { RiRefund2Line } from "react-icons/ri";
+import { FaPen } from "react-icons/fa";
 
 const Sidebar = () => {
-  const { user, logOut } = useAuth();
+  const { logOut } = useAuth();
 
   const { loadedUser, isLoading } = useUserDetails();
   const navigate = useNavigate();
@@ -158,6 +163,82 @@ const Sidebar = () => {
                     <div className="divider"></div>
                     <li>
                       <NavLink
+                        to="/"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <IoHomeSharp className="text-xl mr-1" />
+                        Home
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/donationRequests"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <BiDonateBlood className="text-xl mr-1" />
+                        Donation Requests
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/searchDonors"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <FaSearch className="text-xl mr-1" />
+                        Search Donors
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/funding"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <RiRefund2Line className="text-xl mr-1" />
+                        Funding
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/publicBlogs"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <FaPen className="text-xl mr-1" />
+                        Blogs
+                      </NavLink>
+                    </li>
+                    <div className="divider"></div>
+                    <li>
+                      <NavLink
                         to="/dashboard/profile"
                         className={({ isActive }) =>
                           `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
@@ -231,6 +312,82 @@ const Sidebar = () => {
                     <div className="divider"></div>
                     <li>
                       <NavLink
+                        to="/"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <IoHomeSharp className="text-xl mr-1" />
+                        Home
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/donationRequests"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <BiDonateBlood className="text-xl mr-1" />
+                        Donation Requests
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/searchDonors"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <FaSearch className="text-xl mr-1" />
+                        Search Donors
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/funding"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <RiRefund2Line className="text-xl mr-1" />
+                        Funding
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/publicBlogs"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <FaPen className="text-xl mr-1" />
+                        Blogs
+                      </NavLink>
+                    </li>
+                    <div className="divider"></div>
+                    <li>
+                      <NavLink
                         to="/dashboard/profile"
                         className={({ isActive }) =>
                           `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
@@ -299,6 +456,82 @@ const Sidebar = () => {
                       >
                         <BiSolidDonateBlood className="text-xl mr-1" />
                         Create Donation Request
+                      </NavLink>
+                    </li>
+                    <div className="divider"></div>
+                    <li>
+                      <NavLink
+                        to="/"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <IoHomeSharp className="text-xl mr-1" />
+                        Home
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/donationRequests"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <BiDonateBlood className="text-xl mr-1" />
+                        Donation Requests
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/searchDonors"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <FaSearch className="text-xl mr-1" />
+                        Search Donors
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/funding"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <RiRefund2Line className="text-xl mr-1" />
+                        Funding
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/publicBlogs"
+                        className={({ isActive }) =>
+                          `text-sm font-medium flex gap-2 py-3 px-3 rounded-md transition duration-150 ease-in-out hover:bg-[#AB0A0A] hover:text-white hover:scale-105 ${
+                            isActive
+                              ? "bg-[#D60C0C]  text-white text-base"
+                              : "text-gray-700"
+                          }`
+                        }
+                      >
+                        <FaPen className="text-xl mr-1" />
+                        Blogs
                       </NavLink>
                     </li>
                     <div className="divider"></div>
