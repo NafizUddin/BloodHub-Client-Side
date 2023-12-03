@@ -6,11 +6,14 @@ import useAxiosSecureInterceptors from "../../../Custom Hooks/useAxiosSecureInte
 import Loading from "../../../Components/Loading/Loading";
 import { ImSpinner6 } from "react-icons/im";
 import toast from "react-hot-toast";
+import useUserDetails from "../../../Custom Hooks/useUserDetails";
+import Swal from "sweetalert2";
 
 const Blogs = () => {
   const [selectedStatus, setSelectedStatus] = useState("draft");
   const axiosSecure = useAxiosSecureInterceptors();
   const [loading, setLoading] = useState(false);
+  const { loadedUser } = useUserDetails();
 
   const {
     data: allBlogs,
@@ -47,6 +50,29 @@ const Blogs = () => {
           refetch();
         }
       });
+  };
+
+  const handleDeleteBlog = (data) => {
+    console.log(data);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#2e8b57",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/blogs/${data?._id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            Swal.fire("Deleted!", "The Blog has been deleted.", "success");
+            refetch();
+          }
+        });
+      }
+    });
   };
 
   if (isLoading) {
@@ -98,30 +124,37 @@ const Blogs = () => {
                 {blog?.blogText?.slice(0, 350)}........
               </p>
               <div className="mt-3">
-                {blog?.blogStatus === "draft" ? (
-                  <button
-                    onClick={() => handleStatusChange(blog, "published")}
-                    className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
-                  >
-                    {loading ? (
-                      <ImSpinner6 className="animate-spin m-auto text-xl" />
+                {loadedUser?.role === "admin" && (
+                  <div>
+                    {blog?.blogStatus === "draft" ? (
+                      <button
+                        onClick={() => handleStatusChange(blog, "published")}
+                        className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+                      >
+                        {loading ? (
+                          <ImSpinner6 className="animate-spin m-auto text-xl" />
+                        ) : (
+                          "Publish Blog"
+                        )}
+                      </button>
                     ) : (
-                      "Publish Blog"
+                      <button
+                        onClick={() => handleStatusChange(blog, "draft")}
+                        className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+                      >
+                        Unpublish Blog
+                      </button>
                     )}
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => handleStatusChange(blog, "draft")}
-                    className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
-                  >
-                    Unpublish Blog
-                  </button>
+                    <div className="mt-3">
+                      <button
+                        onClick={() => handleDeleteBlog(blog)}
+                        className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+                      >
+                        Delete Blog
+                      </button>
+                    </div>
+                  </div>
                 )}
-              </div>
-              <div className="mt-3">
-                <button className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white">
-                  Delete Blog
-                </button>
               </div>
             </div>
           </div>

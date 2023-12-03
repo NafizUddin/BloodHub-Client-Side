@@ -131,30 +131,6 @@ const SearchDonors = () => {
               </div>
             </div>
 
-            <div className="py-5">
-              <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-red-600 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
-                <input
-                  type="email"
-                  {...register("donorEmail", {
-                    required: {
-                      value: true,
-                      message: "Donor Email is required",
-                    },
-                    pattern: {
-                      value:
-                        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                      message: "Invalid Email Format",
-                    },
-                  })}
-                  className="w-full bg-transparent pb-3  border-b border-gray-300 outline-none invalid:border-red-400 transition placeholder-slate-500"
-                  placeholder="Enter Donor Email"
-                />
-                <p className="mt-2 text-sm text-red-600 font-medium">
-                  {errors?.donorEmail?.message}
-                </p>
-              </div>
-            </div>
-
             <button
               type="submit"
               className="w-full rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
