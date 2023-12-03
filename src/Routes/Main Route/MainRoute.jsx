@@ -102,9 +102,10 @@ const MainRoute = createBrowserRouter([
         path: "content-management",
         element: <Blogs />,
       },
+      // Volunteer Routes
       {
         path: "volunteerHome",
-        element: <VolunteerHome />,
+        element: <AdminHome />,
       },
       // Donor Routes
       {
