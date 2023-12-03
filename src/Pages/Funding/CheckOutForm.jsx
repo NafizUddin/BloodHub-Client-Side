@@ -6,20 +6,21 @@ import { useState } from "react";
 import useUserDetails from "../../Custom Hooks/useUserDetails";
 import moment from "moment/moment";
 import { ImSpinner6 } from "react-icons/im";
+import { useRef } from "react";
 
-const CheckOutForm = () => {
+const CheckOutForm = ({ refetch }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecureInterceptors();
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
   const [clientSecret, setClientSecret] = useState("");
   const { loadedUser } = useUserDetails();
+  const formRef = useRef(null);
 
   useEffect(() => {
     amount !== 0 &&
       axiosSecure.post("/create-payment-intent", { amount }).then((res) => {
-        console.log(res.data.clientSecret);
         setClientSecret(res.data.clientSecret);
       });
   }, [axiosSecure, amount]);
@@ -94,7 +95,8 @@ const CheckOutForm = () => {
           if (res.data.insertedId) {
             setLoading(false);
             Swal.fire("Good job!", `You donated $${amount}`, "success");
-            window.location.reload();
+            formRef.current.reset();
+            refetch();
           }
         });
       }
@@ -102,7 +104,7 @@ const CheckOutForm = () => {
   };
   return (
     <div>
-      <form onSubmit={handleFunding}>
+      <form ref={formRef} onSubmit={handleFunding}>
         <div className="space-y-5">
           <input
             type="number"
@@ -110,6 +112,7 @@ const CheckOutForm = () => {
             min={1}
             onChange={handleAmountChange}
             className="input w-full max-w-xs"
+            required
           />
 
           <CardElement
@@ -129,7 +132,7 @@ const CheckOutForm = () => {
             }}
           />
           <button
-            className="btn rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-14 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
+            className="rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-14 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white"
             type="submit"
             disabled={!stripe}
           >
