@@ -3,13 +3,18 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecureInterceptors from "../../Custom Hooks/useAxiosSecureInterceptors";
 import { useState } from "react";
+import useUserDetails from "../../Custom Hooks/useUserDetails";
+import moment from "moment/moment";
+import { ImSpinner6 } from "react-icons/im";
 
 const CheckOutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecureInterceptors();
   const [amount, setAmount] = useState(0);
   const [clientSecret, setClientSecret] = useState("");
+  const { loadedUser } = useUserDetails();
 
   useEffect(() => {
     amount !== 0 &&
@@ -24,7 +29,7 @@ const CheckOutForm = () => {
     setAmount(enteredAmount);
   };
 
-  console.log(clientSecret, amount);
+  const currentDateMoment = moment().format("Do MMMM YYYY");
 
   const handleFunding = async (e) => {
     e.preventDefault();
@@ -56,6 +61,44 @@ const CheckOutForm = () => {
     } else {
       console.log("[PaymentMethod]", paymentMethod);
     }
+
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            email: loadedUser?.email,
+            name: loadedUser?.name,
+          },
+        },
+      });
+
+    if (confirmError) {
+      console.log("[error]", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error?.message}`,
+      });
+    } else {
+      if (paymentIntent.status === "succeeded") {
+        const payment = {
+          email: loadedUser?.email,
+          name: loadedUser?.name,
+          donation: parseInt(amount),
+          transactionId: paymentIntent.id,
+          date: currentDateMoment,
+        };
+
+        axiosSecure.post("/funding", payment).then((res) => {
+          if (res.data.insertedId) {
+            setLoading(false);
+            Swal.fire("Good job!", `You donated $${amount}`, "success");
+            window.location.reload();
+          }
+        });
+      }
+    }
   };
   return (
     <div>
@@ -64,7 +107,7 @@ const CheckOutForm = () => {
           <input
             type="number"
             placeholder="Enter Amount"
-            min={0}
+            min={1}
             onChange={handleAmountChange}
             className="input w-full max-w-xs"
           />
@@ -90,7 +133,11 @@ const CheckOutForm = () => {
             type="submit"
             disabled={!stripe}
           >
-            Pay
+            {loading ? (
+              <ImSpinner6 className="animate-spin m-auto text-xl" />
+            ) : (
+              "Pay"
+            )}
           </button>
         </div>
       </form>
