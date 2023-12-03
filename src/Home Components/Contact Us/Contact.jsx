@@ -9,7 +9,7 @@ import { FaLinkedinIn } from "react-icons/fa";
 
 const Contact = () => {
   return (
-    <div>
+    <div data-aos="zoom-out" data-aos-duration="1200">
       <SectionTitle
         sub={"Get In Touch"}
         heading={"Contact Us"}

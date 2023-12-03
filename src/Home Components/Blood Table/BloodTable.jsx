@@ -2,7 +2,7 @@ import SectionTitle from "../../Components/Section Title/SectionTitle";
 
 const BloodTable = () => {
   return (
-    <div className="my-16">
+    <div data-aos="zoom-in-down" data-aos-duration="1300" className="my-16">
       <SectionTitle
         sub={"Donor Eligibility Assessment Criteria"}
         heading={"Potential Donor Evaluation"}
