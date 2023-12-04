@@ -3,6 +3,7 @@ import useAxiosPublic from "../../Custom Hooks/useAxiosPublic";
 import Loading from "../../Components/Loading/Loading";
 import SectionTitle from "../../Components/Section Title/SectionTitle";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const PublicBloodRequests = () => {
   const axiosPublic = useAxiosPublic();
@@ -21,6 +22,9 @@ const PublicBloodRequests = () => {
 
   return (
     <div className="my-6">
+      <Helmet>
+        <title>BloodHub | Blood Requests</title>
+      </Helmet>
       <SectionTitle
         sub={"Urgent Appeals for Life-Saving Contributions"}
         heading={"Blood Donation Requests"}

@@ -10,6 +10,7 @@ import useAxiosPublic from "../../Custom Hooks/useAxiosPublic";
 import { useEffect } from "react";
 import ReactToPrint from "react-to-print";
 import { useRef } from "react";
+import { Helmet } from "react-helmet-async";
 
 const SearchDonors = () => {
   const printRef = useRef();
@@ -40,6 +41,9 @@ const SearchDonors = () => {
   };
   return (
     <div className="mt-4">
+      <Helmet>
+        <title>BloodHub | Search Donor</title>
+      </Helmet>
       <SectionTitle
         sub={"Connecting Lifesavers, One Donation at a Time"}
         heading={"Search Blood Donors"}

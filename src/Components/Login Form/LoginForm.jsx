@@ -29,12 +29,35 @@ const LoginForm = () => {
         const userInfo = {
           email: res.user?.email,
           name: res.user?.displayName,
+          firebaseId: res.user?.uid,
+          user_img: res.user?.photoURL,
+          role: "donor",
+          status: "active",
         };
 
-        axiosSecure.post("/users", userInfo).then(() => {
-          Swal.fire("Success!", "You have logged in with Google!", "success");
-          navigate(location?.state ? location.state : "/");
+        axiosSecure.get(`/existingUsers/${res.user?.email}`).then((res) => {
+          if (!res.data?.found) {
+            navigate("/socialLogin", { state: { userData: userInfo } });
+          } else {
+            Swal.fire("Success!", "You have logged in with Google!", "success");
+            navigate(location?.state ? location.state : "/");
+          }
         });
+
+        // const userInfo = {
+        //   email: res.user?.email,
+        //   name: res.user?.displayName,
+        //   firebaseId: res.user.uid,
+        //   user_img: res.user.photoURL,
+        //   role: "donor",
+        //   status: "active",
+        // };
+        // console.log(res.user);
+        // // axiosSecure.post("/users", userInfo).then(() => {
+        // //   Swal.fire("Success!", "You have logged in with Google!", "success");
+        // //   navigate(location?.state ? location.state : "/");
+        // // });
+        // navigate("/socialLogin", { state: { userData: userInfo } });
       })
       .catch((error) => {
         console.log(error.code);

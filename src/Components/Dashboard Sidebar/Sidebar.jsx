@@ -17,7 +17,7 @@ import { RiRefund2Line } from "react-icons/ri";
 import { FaPen } from "react-icons/fa";
 
 const Sidebar = () => {
-  const { logOut } = useAuth();
+  const { logOut, user } = useAuth();
 
   const { loadedUser, isLoading } = useUserDetails();
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ const Sidebar = () => {
 
               <div id="profile" className="space-y-3">
                 <img
-                  src={loadedUser?.user_img}
+                  src={loadedUser?.user_img || user?.photoURL}
                   alt="Avatar user"
                   className="w-10 h-10 md:w-20 md:h-20 rounded-full mx-auto object-cover object-top"
                 />

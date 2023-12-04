@@ -3,6 +3,7 @@ import useAxiosSecureInterceptors from "../../Custom Hooks/useAxiosSecureInterce
 import SectionTitle from "../../Components/Section Title/SectionTitle";
 import PublicBlogCard from "../../Components/Public Blog Card/PublicBlogCard";
 import donate from "../../assets/Icons/blood-donation.png";
+import { Helmet } from "react-helmet-async";
 
 const PublicBlog = () => {
   const axiosSecure = useAxiosSecureInterceptors();
@@ -19,6 +20,9 @@ const PublicBlog = () => {
   });
   return (
     <div>
+      <Helmet>
+        <title>BloodHub | Blogs</title>
+      </Helmet>
       <SectionTitle
         sub={"Life-Changing Stories of Compassion"}
         heading={"Stories that Save Lives"}

@@ -23,6 +23,7 @@ import UpdateProfile from "../../Components/Update Profile Form/UpdateProfile";
 import UpdateDonation from "../../Pages/Update Donation Req/UpdateDonation";
 import AddBlogs from "../../Pages/Admin Pages/Add Blogs Page/AddBlogs";
 import PublicBlog from "../../Pages/Public Blogs/PublicBlog";
+import SocialLogin from "../../Pages/Social Login Redirect Page/SocialLogin";
 
 const MainRoute = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const MainRoute = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/socialLogin",
+    element: <SocialLogin></SocialLogin>,
   },
   {
     path: "dashboard",

@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecureInterceptors from "../../Custom Hooks/useAxiosSecureInterceptors";
 import useUserDetails from "../../Custom Hooks/useUserDetails";
 import Loading from "../../Components/Loading/Loading";
+import { Helmet } from "react-helmet-async";
 
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_Pk);
 
@@ -31,6 +32,9 @@ const Funding = () => {
 
   return (
     <div className="mt-5">
+      <Helmet>
+        <title>BloodHub | Funding</title>
+      </Helmet>
       <SectionTitle
         sub={"Empowering Lifesaving Initiatives Together"}
         heading={"Funding for Blood Donation Initiatives"}

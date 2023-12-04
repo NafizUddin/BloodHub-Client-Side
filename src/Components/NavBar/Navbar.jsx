@@ -166,7 +166,7 @@ const Navbar = () => {
                     className="btn btn-ghost btn-circle avatar"
                   >
                     <div className="w-10 rounded-full">
-                      <img src={loadedUser?.user_img} />
+                      <img src={loadedUser?.user_img || user?.photoURL} />
                     </div>
                   </label>
                   <ul
