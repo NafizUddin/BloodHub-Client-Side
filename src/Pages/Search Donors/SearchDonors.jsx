@@ -7,13 +7,9 @@ import { ImSpinner6 } from "react-icons/im";
 import searchImg from "../../assets/Icons/SearchDonor.png";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Custom Hooks/useAxiosPublic";
-import { usePDF } from "react-to-pdf";
 import { useEffect } from "react";
-import generatePDF, { Resolution, Margin } from "react-to-pdf";
 import ReactToPrint from "react-to-print";
 import { useRef } from "react";
-
-const getTargetElement = () => document.getElementById("content-id");
 
 const SearchDonors = () => {
   const printRef = useRef();
@@ -27,29 +23,6 @@ const SearchDonors = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  // const { targetRef, toPDF } = usePDF({
-  //   filename: "DonorList.pdf",
-  // });
-
-  // const options = {
-  //   // default is `save`
-  //   method: "open",
-  //   // default is Resolution.MEDIUM = 3, which should be enough, higher values
-  //   // increases the image quality but also the size of the PDF, so be careful
-  //   // using values higher than 10 when having multiple pages generated, it
-  //   // might cause the page to crash or hang.
-  //   resolution: Resolution.HIGH,
-  //   page: {
-  //     // margin is in MM, default is Margin.NONE = 0
-  //     margin: Margin.SMALL,
-  //     format: "letter",
-  //     orientation: "landscape",
-  //   },
-  //   // Customize any value passed to the jsPDF instance and html2canvas
-  //   // function. You probably will not need this and things can break,
-  //   // so use with caution.
-  // };
 
   const handleSearchDonor = (data) => {
     setLoading(true);
