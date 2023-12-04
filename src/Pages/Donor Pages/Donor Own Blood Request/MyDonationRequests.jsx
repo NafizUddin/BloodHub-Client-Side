@@ -25,6 +25,7 @@ const MyDonationRequests = () => {
   const handleSelectChange = (event) => {
     // Update the state with the selected value
     setSelectedStatus(event.target.value);
+    setCurrentPage(0);
   };
 
   const handleCurrentPage = (page) => {
