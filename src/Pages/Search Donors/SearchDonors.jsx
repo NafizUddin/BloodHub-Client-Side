@@ -7,15 +7,49 @@ import { ImSpinner6 } from "react-icons/im";
 import searchImg from "../../assets/Icons/SearchDonor.png";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Custom Hooks/useAxiosPublic";
+import { usePDF } from "react-to-pdf";
+import { useEffect } from "react";
+import generatePDF, { Resolution, Margin } from "react-to-pdf";
+import ReactToPrint from "react-to-print";
+import { useRef } from "react";
+
+const getTargetElement = () => document.getElementById("content-id");
 
 const SearchDonors = () => {
+  const printRef = useRef();
   const { register, handleSubmit, reset, formState, control } = useForm();
   const { errors } = formState;
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [searchDonors, setSearchedDonors] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const axiosPublic = useAxiosPublic();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // const { targetRef, toPDF } = usePDF({
+  //   filename: "DonorList.pdf",
+  // });
+
+  // const options = {
+  //   // default is `save`
+  //   method: "open",
+  //   // default is Resolution.MEDIUM = 3, which should be enough, higher values
+  //   // increases the image quality but also the size of the PDF, so be careful
+  //   // using values higher than 10 when having multiple pages generated, it
+  //   // might cause the page to crash or hang.
+  //   resolution: Resolution.HIGH,
+  //   page: {
+  //     // margin is in MM, default is Margin.NONE = 0
+  //     margin: Margin.SMALL,
+  //     format: "letter",
+  //     orientation: "landscape",
+  //   },
+  //   // Customize any value passed to the jsPDF instance and html2canvas
+  //   // function. You probably will not need this and things can break,
+  //   // so use with caution.
+  // };
 
   const handleSearchDonor = (data) => {
     setLoading(true);
@@ -145,38 +179,51 @@ const SearchDonors = () => {
         </div>
         <div className="lg:col-span-4">
           {searchDonors ? (
-            <div className="mt-5">
-              <h1 className="text-[#D60C0C] text-2xl">
-                Found Donors: {searchDonors?.length}
-              </h1>
-              <div className="overflow-x-auto mt-5 pb-16">
-                <table className="table">
-                  {/* head */}
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Blood Group</th>
-                      <th>Upazilla</th>
-                      <th>District</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {searchDonors?.map((singleDonor, index) => (
-                      <tr key={singleDonor?._id}>
-                        <th>{index + 1}</th>
-                        <td>{singleDonor?.name}</td>
-                        <td>{singleDonor?.email}</td>
-                        <td>{singleDonor?.bloodGroup}</td>
-                        <td>{singleDonor?.upazilla}</td>
-                        <td>{singleDonor?.district}</td>
+            <>
+              <div ref={printRef} className="mt-5">
+                <h1 className="text-[#D60C0C] text-2xl">
+                  Found Donors: {searchDonors?.length}
+                </h1>
+                <div className="overflow-x-auto mt-5 pb-16">
+                  <table className="table">
+                    {/* head */}
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Blood Group</th>
+                        <th>Upazilla</th>
+                        <th>District</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {searchDonors?.map((singleDonor, index) => (
+                        <tr key={singleDonor?._id}>
+                          <th>{index + 1}</th>
+                          <td>{singleDonor?.name}</td>
+                          <td>{singleDonor?.email}</td>
+                          <td>{singleDonor?.bloodGroup}</td>
+                          <td>{singleDonor?.upazilla}</td>
+                          <td>{singleDonor?.district}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
+              <div className="flex justify-center items-center mb-14">
+                <ReactToPrint
+                  bodyClass="print-agreement"
+                  content={() => printRef.current}
+                  trigger={() => (
+                    <button className="rounded-full bg-[#D60C0C] h-11 flex items-center justify-center px-6 py-3 transition hover:bg-white hover:text-[#D60C0C] hover:outline font-semibold text-white">
+                      Download PDF
+                    </button>
+                  )}
+                />
+              </div>
+            </>
           ) : (
             <div className="flex justify-center items-center flex-col">
               <div className="lg:pt-32">
