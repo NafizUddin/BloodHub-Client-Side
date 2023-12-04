@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "https://twelfth-assignment-server-side.vercel.app/api",
   withCredentials: true,
 });
 

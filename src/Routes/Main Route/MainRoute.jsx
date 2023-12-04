@@ -12,7 +12,6 @@ import AdminHome from "../../Pages/Admin Pages/Admin Home/AdminHome";
 import AllUsers from "../../Pages/Admin Pages/All Users/AllUsers";
 import AllRequest from "../../Pages/Admin Pages/All Blood Donation Request/AllRequest";
 import Blogs from "../../Pages/Admin Pages/Content Management/Blogs";
-import VolunteerHome from "../../Pages/Volunteer Pages/Volunteer Home/VolunteerHome";
 import MyDonationRequests from "../../Pages/Donor Pages/Donor Own Blood Request/MyDonationRequests";
 import ProfileCard from "../../Components/Profile Card/ProfileCard";
 import PublicBloodRequests from "../../Pages/Public Blood requests/PublicBloodRequests";
@@ -23,7 +22,7 @@ import UpdateProfile from "../../Components/Update Profile Form/UpdateProfile";
 import UpdateDonation from "../../Pages/Update Donation Req/UpdateDonation";
 import AddBlogs from "../../Pages/Admin Pages/Add Blogs Page/AddBlogs";
 import PublicBlog from "../../Pages/Public Blogs/PublicBlog";
-import SocialLogin from "../../Pages/Social Login Redirect Page/SocialLogin";
+import AddUserInfo from "../../Pages/Add User Info/AddUserInfo";
 
 const MainRoute = createBrowserRouter([
   {
@@ -49,7 +48,7 @@ const MainRoute = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(
-            `http://localhost:3000/api/donation/${params.id}?status=Pending`
+            `https://twelfth-assignment-server-side.vercel.app/api/donation/${params.id}?status=Pending`
           ),
       },
       {
@@ -79,8 +78,8 @@ const MainRoute = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "/socialLogin",
-    element: <SocialLogin></SocialLogin>,
+    path: "/addUserInfo",
+    element: <AddUserInfo />,
   },
   {
     path: "dashboard",
@@ -142,7 +141,7 @@ const MainRoute = createBrowserRouter([
         element: <UpdateDonation></UpdateDonation>,
         loader: ({ params }) =>
           fetch(
-            `http://localhost:3000/api/donation/${params.id}?status=Pending`
+            `https://twelfth-assignment-server-side.vercel.app/api/donation/${params.id}?status=Pending`
           ),
       },
     ],

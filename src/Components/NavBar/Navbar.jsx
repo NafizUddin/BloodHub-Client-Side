@@ -176,7 +176,7 @@ const Navbar = () => {
                     <li>
                       <a className="text-lg font-medium hover:bg-[#D60C0C]  hover:text-white">
                         <CgProfile className="text-lg mr-1" />{" "}
-                        {loadedUser?.name}
+                        {loadedUser?.name || user?.displayName}
                       </a>
                     </li>
                     <li>

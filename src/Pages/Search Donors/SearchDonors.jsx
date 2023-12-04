@@ -14,7 +14,7 @@ import { Helmet } from "react-helmet-async";
 
 const SearchDonors = () => {
   const printRef = useRef();
-  const { register, handleSubmit, reset, formState, control } = useForm();
+  const { handleSubmit, reset, formState, control } = useForm();
   const { errors } = formState;
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [searchDonors, setSearchedDonors] = useState(null);
@@ -157,7 +157,7 @@ const SearchDonors = () => {
         <div className="lg:col-span-4">
           {searchDonors ? (
             <>
-              <div ref={printRef} className="mt-5">
+              <div ref={printRef} className="mt-5 px-5">
                 <h1 className="text-[#D60C0C] text-2xl">
                   Found Donors: {searchDonors?.length}
                 </h1>

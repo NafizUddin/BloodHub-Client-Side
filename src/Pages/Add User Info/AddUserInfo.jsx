@@ -7,7 +7,7 @@ import { useState } from "react";
 import useAxiosSecureInterceptors from "../../Custom Hooks/useAxiosSecureInterceptors";
 import Swal from "sweetalert2";
 
-const SocialLogin = () => {
+const AddUserInfo = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const userData = location.state.userData;
@@ -16,7 +16,7 @@ const SocialLogin = () => {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecureInterceptors();
-  console.log(location);
+  console.log(location.state);
 
   const handleAddInformation = (data) => {
     setLoading(true);
@@ -161,4 +161,4 @@ const SocialLogin = () => {
   );
 };
 
-export default SocialLogin;
+export default AddUserInfo;

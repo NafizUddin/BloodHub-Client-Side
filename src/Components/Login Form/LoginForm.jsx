@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import useAuth from "../../Custom Hooks/useAuth";
@@ -14,9 +14,9 @@ const LoginForm = () => {
   const { errors } = formState;
   const location = useLocation();
   const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
   const { logInWithGoogle, logInWithGithub, signInUser, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [showModal, setShowModal] = useState(true);
   const axiosSecure = useAxiosSecureInterceptors();
 
   useEffect(() => {
@@ -37,27 +37,12 @@ const LoginForm = () => {
 
         axiosSecure.get(`/existingUsers/${res.user?.email}`).then((res) => {
           if (!res.data?.found) {
-            navigate("/socialLogin", { state: { userData: userInfo } });
+            navigate("/addUserInfo", { state: { userData: userInfo } });
           } else {
             Swal.fire("Success!", "You have logged in with Google!", "success");
-            navigate(location?.state ? location.state : "/");
+            navigate(from);
           }
         });
-
-        // const userInfo = {
-        //   email: res.user?.email,
-        //   name: res.user?.displayName,
-        //   firebaseId: res.user.uid,
-        //   user_img: res.user.photoURL,
-        //   role: "donor",
-        //   status: "active",
-        // };
-        // console.log(res.user);
-        // // axiosSecure.post("/users", userInfo).then(() => {
-        // //   Swal.fire("Success!", "You have logged in with Google!", "success");
-        // //   navigate(location?.state ? location.state : "/");
-        // // });
-        // navigate("/socialLogin", { state: { userData: userInfo } });
       })
       .catch((error) => {
         console.log(error.code);
@@ -67,9 +52,24 @@ const LoginForm = () => {
 
   const handleGithubLogin = () => {
     logInWithGithub()
-      .then(() => {
-        Swal.fire("Success!", "You have logged in with Github!", "success");
-        navigate(location?.state ? location.state : "/");
+      .then((res) => {
+        const userInfo = {
+          email: res.user?.email,
+          name: res.user?.displayName,
+          firebaseId: res.user?.uid,
+          user_img: res.user?.photoURL,
+          role: "donor",
+          status: "active",
+        };
+
+        axiosSecure.get(`/existingUsers/${res.user?.email}`).then((res) => {
+          if (!res.data?.found) {
+            navigate("/addUserInfo", { state: { userData: userInfo } });
+          } else {
+            Swal.fire("Success!", "You have logged in with Google!", "success");
+            navigate(from);
+          }
+        });
       })
       .catch((error) => {
         console.log(error.code);
@@ -84,7 +84,7 @@ const LoginForm = () => {
         console.log(loggedInUser);
         reset();
         Swal.fire("Success!", "You have logged in successfully!", "success");
-        navigate(location?.state ? location.state : "/");
+        navigate(from);
       })
       .catch((error) => {
         Swal.fire("Ooppss!", "Your Email or Password didn't match", "error");

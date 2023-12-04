@@ -24,6 +24,7 @@ const RegisterForm = () => {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const axiosSecure = useAxiosSecureInterceptors();
   const axiosPublic = useAxiosPublic();
 
@@ -77,7 +78,7 @@ const RegisterForm = () => {
                         "You have logged in successfully!",
                         "success"
                       );
-                      navigate(location?.state ? location.state : "/");
+                      navigate(from);
                     }
                   });
                 }

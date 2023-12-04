@@ -83,7 +83,7 @@ const Sidebar = () => {
                 />
                 <div>
                   <h2 className="font-medium md:text-xl text-center text-[#D60C0C]">
-                    {loadedUser?.name}
+                    {loadedUser?.name || user?.displayName}
                   </h2>
                   <p className="text-sm text-gray-500 text-center mt-1 uppercase">
                     {loadedUser?.role}

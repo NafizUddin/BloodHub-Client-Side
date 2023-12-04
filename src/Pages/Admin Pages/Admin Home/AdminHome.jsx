@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useUserDetails from "../../../Custom Hooks/useUserDetails";
 import { MdBloodtype } from "react-icons/md";
 import useAxiosSecureInterceptors from "../../../Custom Hooks/useAxiosSecureInterceptors";
+import Loading from "../../../Components/Loading/Loading";
 
 const AdminHome = () => {
   const { loadedUser } = useUserDetails();
@@ -23,7 +24,7 @@ const AdminHome = () => {
     },
   });
 
-  const { data: allFundingCount } = useQuery({
+  const { data: allFundingCount, isLoading } = useQuery({
     queryKey: ["allFundingCount"],
     queryFn: async () => {
       const res = await axiosSecure.get("/funding");
@@ -31,7 +32,9 @@ const AdminHome = () => {
     },
   });
 
-  console.log(allFundingCount);
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div>
