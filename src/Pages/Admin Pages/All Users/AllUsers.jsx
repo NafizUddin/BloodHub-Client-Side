@@ -49,20 +49,24 @@ const AllUsers = () => {
     queryKey: ["totalUsers", currentPage, selectedStatus],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/user/pagination?page=${currentPage}&size=${itemsPerPage}`
+        `/user/pagination?status=${selectedStatus}&page=${currentPage}&size=${itemsPerPage}`
       );
-      return res.data.filter((user) => user?.status === selectedStatus);
+      return res.data;
     },
   });
 
-  const { data } = useQuery({
-    queryKey: ["userCount"],
+  const { data: userCount } = useQuery({
+    queryKey: ["userCount", selectedStatus],
     queryFn: async () => {
-      const res = await axiosSecure.get("/userCount");
+      const res = await axiosSecure.get(
+        `/allUsersCount?status=${selectedStatus}`
+      );
       setCount(res.data?.count);
       return res.data?.count;
     },
   });
+
+  console.log("Next", currentPage);
 
   const handleBlockUser = (singleUser) => {
     setLoading(true);
@@ -102,6 +106,7 @@ const AllUsers = () => {
   const handleSelectChange = (event) => {
     // Update the state with the selected value
     setSelectedStatus(event.target.value);
+    setCurrentPage(0);
   };
 
   const handleRoleChange = (singleUser, selectedRole) => {

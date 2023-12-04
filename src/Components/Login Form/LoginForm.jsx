@@ -15,7 +15,8 @@ const LoginForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
-  const { logInWithGoogle, logInWithGithub, signInUser, loading } = useAuth();
+  const { logInWithGoogle, logInWithGithub, signInUser, loading, setLoading } =
+    useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const axiosSecure = useAxiosSecureInterceptors();
 
@@ -61,7 +62,7 @@ const LoginForm = () => {
           role: "donor",
           status: "active",
         };
-
+        
         axiosSecure.get(`/existingUsers/${res.user?.email}`).then((res) => {
           if (!res.data?.found) {
             navigate("/addUserInfo", { state: { userData: userInfo } });
@@ -73,6 +74,7 @@ const LoginForm = () => {
       })
       .catch((error) => {
         console.log(error.code);
+        setLoading(false);
         // Swal.fire("Ooppss!", `${error.message}`, "error");
       });
   };
