@@ -9,7 +9,7 @@ Click here to see the live server: [https://bloodhub-fullstack-a12.netlify.app/]
 - Admin Password - admin123
 
 ## [ Server Side Repository](https://github.com/NafizUddin/BloodHub-Server-Side)
-Click here to see the live server: [https://github.com/NafizUddin/BloodHub-Server-Side](https://github.com/NafizUddin/BloodHub-Server-Side)
+Click here to see the Server Side Repository: [https://github.com/NafizUddin/BloodHub-Server-Side](https://github.com/NafizUddin/BloodHub-Server-Side)
 
 
 ## **In this Assignment,I Have Used:**
