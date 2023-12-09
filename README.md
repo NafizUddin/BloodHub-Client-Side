@@ -8,6 +8,25 @@ Click here to see the live server: [https://bloodhub-fullstack-a12.netlify.app/]
 - Admin Email - admin@admin.com
 - Admin Password - admin123
 
+## **In this Assignment,I Have Used:**
+
+1. React Router
+2. Tanstack Query
+3. React Tailwind CSS
+4. React Hook Form
+5. React AOS Animation
+6. Axios
+7. React Helmet
+8. React Hot Toast & SweetAlert 2
+9. React Time Picker
+10. Swiper Js
+11. React to PDF
+12. React Stripe Js
+13. Jodit React
+14. Moment Js
+15. Firebase
+16. MongoDB
+
 ## [Some Project Features](https://github.com/programming-hero-web-course1/b8a12-client-side-NafizUddin)
 
 There are some features in this project. Here I have provided some of them:
