@@ -5,6 +5,8 @@ This is the 12th assignment of Complete Web Development Course of Programming He
 ## [ Live Server Link](https://bloodhub-fullstack-a12.netlify.app/)
 
 Click here to see the live server: [https://bloodhub-fullstack-a12.netlify.app/](https://bloodhub-fullstack-a12.netlify.app/)
+- Admin Email - admin@admin.com
+- Admin Password - admin123
 
 ## [Some Project Features](https://github.com/programming-hero-web-course1/b8a12-client-side-NafizUddin)
 
